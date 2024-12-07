@@ -4,12 +4,12 @@ public class Character extends Card{
     private ArrayList<Ability> abilities = new ArrayList<Ability>();
     private int health;
     final private int MAX_HEALTH;
-    public Character(String position, String name, String image, ArrayList<Ability> abilities, int health, int max) {
+    public Character(String position, String name, String image, ArrayList<Ability> abilities, int max) {
         super(position, name, image);
         energy = 0;
         this.abilities = abilities;
-        this.health = health;
         MAX_HEALTH = max;
+        health = MAX_HEALTH;
     }
 
     public int getEnergy() {
@@ -60,5 +60,14 @@ public class Character extends Card{
         if (health < 0) {
             health = 0;
         }
+    }
+
+    public int abilityIndex(String name) {
+        for (int i = 0; i < abilities.size(); i++) {
+            if (abilities.get(i).getName().equals(name)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

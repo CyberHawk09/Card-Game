@@ -4,7 +4,7 @@ public class Main {
     public static void main (String[] args) {
         Scanner console = new Scanner(System.in);
         
-        Character knight = new Character("deck", "Knight", "", new ArrayList<Ability>(), 30);
+        Person knight = new Person("deck", "Knight", "", new ArrayList<Ability>(), 30);
         String input = console.nextLine();
         knight.addEnergy(3);
         if (input.equals("attach strong attack")) {

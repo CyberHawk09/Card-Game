@@ -1,10 +1,10 @@
 import java.util.ArrayList;
-public class Character extends Card{
+public class Person extends Card{
     private int energy;
     private ArrayList<Ability> abilities = new ArrayList<Ability>();
     private int health;
     final private int MAX_HEALTH;
-    public Character(String position, String name, String image, ArrayList<Ability> abilities, int max) {
+    public Person(String position, String name, String image, ArrayList<Ability> abilities, int max) {
         super(position, name, image);
         energy = 0;
         this.abilities = abilities;

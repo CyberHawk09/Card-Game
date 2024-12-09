@@ -4,8 +4,8 @@ public class Person extends Card{
     private ArrayList<Ability> abilities = new ArrayList<Ability>();
     private int health;
     final private int MAX_HEALTH;
-    public Person(String position, String name, String image, ArrayList<Ability> abilities, int max) {
-        super(position, name, image);
+    public Person(String name, ArrayList<Ability> abilities, int max) {
+        super(name);
         energy = 0;
         this.abilities = abilities;
         MAX_HEALTH = max;

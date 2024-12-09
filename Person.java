@@ -1,11 +1,16 @@
 import java.util.ArrayList;
 public class Person extends Card{
     private int energy;
+    private int moveCost;
+    private int attackCost;
     private ArrayList<Ability> abilities = new ArrayList<Ability>();
     private int health;
     final private int MAX_HEALTH;
-    public Person(String name, ArrayList<Ability> abilities, int max) {
+
+    public Person(String name, int moveCost, int attackCost, ArrayList<Ability> abilities, int max) {
         super(name);
+        this.moveCost = moveCost;
+        this.attackCost = attackCost;
         energy = 0;
         this.abilities = abilities;
         MAX_HEALTH = max;
@@ -14,6 +19,12 @@ public class Person extends Card{
 
     public int getEnergy() {
         return energy;
+    }
+    public int getMoveCost() {
+        return moveCost;
+    }
+    public int getAttackCost() {
+        return attackCost;
     }
     public ArrayList<Ability> getAbilities() {
         return abilities;
@@ -59,6 +70,20 @@ public class Person extends Card{
         }
         if (health < 0) {
             health = 0;
+        }
+    }
+    public void setMoveCost(int num) {
+        if (num < 0) {
+            moveCost = 0;
+        } else {
+            moveCost = num;
+        }
+    }
+    public void setAttackCost(int num) {
+        if (num < 0) {
+            attackCost = 0;
+        } else {
+            attackCost = num;
         }
     }
 

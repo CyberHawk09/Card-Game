@@ -54,12 +54,35 @@ public class Player {
         }
     }
 
+    public boolean checkSlots() {
+        if (active.getHealth() <= 0) {
+            active = null;
+        }
+        if (secondaryL.getHealth() <= 0) {
+            secondaryL = null;
+        }
+        if (secondaryR.getHealth() <= 0) {
+            secondaryR = null;
+        }
+        if (tertiaryL.getHealth() <= 0) {
+            tertiaryL = null;
+        }
+        if (tertiaryR.getHealth() <= 0) {
+            tertiaryR = null;
+        }
+        if (active == null && secondaryL == null && secondaryR == null && tertiaryL == null && tertiaryR == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static void doAttack(Player attacker, int attackIndex, Player defender) {
         int attackerDamage = attacker.getActive().getAbilities().get(attackIndex).getDamage();
         if (attackerDamage > 0) {
             defender.getActive().subtractHealth(attackerDamage);
         } else {
-            attacker.getActive().addHealth(attackerDamage);
+            attacker.getActive().addHealth(attackerDamage * -1);
         }
     }
 }

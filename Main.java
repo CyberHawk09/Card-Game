@@ -6,26 +6,21 @@ public class Main {
         boolean p1Slots = false;
         boolean p2Slots = false;
         boolean p1Turn = true;
-        int turnCount = 0;
 
         while (!gameOver) {
             if (p1Turn) {
                 runTurn(p1, p2);
+                if (!p1.checkSlots()) {
+                    gameOver = true;
+                }
                 p1Turn = false;
             } else {
                 runTurn(p2, p1);
-                p1Turn = true;
-            }
-            p1Slots = p1.checkSlots();
-            p2Slots = p2.checkSlots();
-            if (turnCount >= 2) {
-                if (!p1Slots) {
-                    gameOver = true;
-                } else if (!p2Slots) {
+                if (!p2.checkSlots()) {
                     gameOver = true;
                 }
+                p1Turn = true;
             }
-            turnCount++;
         }
     }
     public static void runTurn(Player p1, Player p2) {

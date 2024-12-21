@@ -70,7 +70,7 @@ public class Player {
         if (tertiaryR.getHealth() <= 0) {
             tertiaryR = null;
         }
-        if (active == null && secondaryL == null && secondaryR == null && tertiaryL == null && tertiaryR == null) {
+        if (active == null) {
             return true;
         } else {
             return false;

@@ -17,6 +17,22 @@ public class Player {
         abilDeck = aDeck;
     }
 
+    public void setupHand() {
+        for (int i = 0; i < 2; i++) {
+            double randDouble = random.nextDouble() * personDeck.size();
+            int index = (int) randDouble;
+            personHand.add(personDeck.get(index));
+            personDeck.remove(index);
+        }
+        for (int i = 0; i < 2; i++) {
+            double randDouble = random.nextDouble() * abilDeck.size();
+            int index = (int) randDouble;
+            abilHand.add(abilDeck.get(index));
+            abilDeck.remove(index);
+        }
+
+    }
+
     public int deckSize() {
         return personDeck.size() + abilDeck.size();
     }
@@ -41,7 +57,10 @@ public class Player {
     }
 
     public void deckDraw() {
-        int deckSize = personDeck.size() + abilDeck.size();
+        int deckSize = deckSize();
+        if (deckSize <= 0) {
+            return;
+        }
         double ind = random.nextDouble() * deckSize;
         int index = (int)ind;
         if (index < personDeck.size()) {
@@ -55,6 +74,14 @@ public class Player {
     }
 
     public boolean checkSlots() {
+        if (active == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void healthUpdate() {
         if (active.getHealth() <= 0) {
             active = null;
         }
@@ -69,11 +96,6 @@ public class Player {
         }
         if (tertiaryR.getHealth() <= 0) {
             tertiaryR = null;
-        }
-        if (active == null) {
-            return true;
-        } else {
-            return false;
         }
     }
 

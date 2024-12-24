@@ -29,7 +29,7 @@ public class Main {
     }
     public static void runTurn(Player p1, Player p2) {
         for (int i = 0; i < 4; i++) {
-            String card = UserInterface.getCardSelection();
+            String card = UserInterface.getInput();
             switch (card) {
                 case "active":
                     if (p1.getActive() == null) {
@@ -67,6 +67,11 @@ public class Main {
                     }
                     p1.deckDraw();
             }
+        }
+        boolean endTurn = false;
+        while (!endTurn) {
+            String select1 = UserInterface.getInput();
+            
         }
     }
     public static void main (String[] args) {

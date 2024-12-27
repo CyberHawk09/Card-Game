@@ -96,6 +96,7 @@ public class Main {
         }
         console.close();
         */
+        /* 
         Person k = new Person( "Knight", 3, new ArrayList<Ability>(), 30);
         ArrayList<Person> p = new ArrayList<Person>();
         p.add(k);
@@ -110,5 +111,8 @@ public class Main {
         a.add(s);
         a.add(s);
         runGame(new Player(p, a), new Player(p, a));
+        */
+        UserInterface frame = new UserInterface();
+        frame.gameScreen();
     }
 }

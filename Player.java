@@ -39,6 +39,12 @@ public class Player {
     public int handSize() {
         return personHand.size() + abilDeck.size();
     }
+    public ArrayList<Person> getPersonHand() {
+        return personHand;
+    }
+    public ArrayList<Ability> getAbilHand() {
+        return abilHand;
+    }
 
     public Person getActive() {
         return active;

@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 public class Main {
     public static void runGame(Player p1, Player p2) {
@@ -7,8 +6,6 @@ public class Main {
         boolean p2Slots = false;
         boolean p1Turn = true;
 
-        p1.setupHand();
-        p2.setupHand();
         while (!gameOver) {
             if (p1Turn) {
                 runTurn(p1, p2);

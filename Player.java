@@ -2,48 +2,26 @@ import java.util.ArrayList;
 import java.util.Random;
 public class Player {
     private Random random = new Random();
-    private ArrayList<Person> personDeck = new ArrayList<Person>();
-    private ArrayList<Ability> abilDeck = new ArrayList<Ability>();
-    private ArrayList<Person> personHand = new ArrayList<Person>();
-    private ArrayList<Ability> abilHand = new ArrayList<Ability>();
+    private ArrayList<Ability> deck = new ArrayList<Ability>();
+    private Ability[] hand = new Ability[2];
     private Person active = null;
     private Person secondaryL = null;
     private Person secondaryR = null;
     private Person tertiaryL = null;
     private Person tertiaryR = null;
 
-    public Player(ArrayList<Person> pDeck, ArrayList<Ability> aDeck) {
-        personDeck = pDeck;
-        abilDeck = aDeck;
-    }
-
-    public void setupHand() {
-        for (int i = 0; i < 2; i++) {
-            double randDouble = random.nextDouble() * personDeck.size();
-            int index = (int) randDouble;
-            personHand.add(personDeck.get(index));
-            personDeck.remove(index);
-        }
-        for (int i = 0; i < 2; i++) {
-            double randDouble = random.nextDouble() * abilDeck.size();
-            int index = (int) randDouble;
-            abilHand.add(abilDeck.get(index));
-            abilDeck.remove(index);
-        }
-
+    public Player(ArrayList<Ability> aDeck) {
+        deck = aDeck;
     }
 
     public int deckSize() {
-        return personDeck.size() + abilDeck.size();
+        return deck.size();
     }
     public int handSize() {
-        return personHand.size() + abilDeck.size();
+        return deck.size();
     }
-    public ArrayList<Person> getPersonHand() {
-        return personHand;
-    }
-    public ArrayList<Ability> getAbilHand() {
-        return abilHand;
+    public Ability[] getHand() {
+        return hand;
     }
 
     public Person getActive() {
@@ -67,15 +45,10 @@ public class Player {
         if (deckSize <= 0) {
             return;
         }
-        double ind = random.nextDouble() * deckSize;
-        int index = (int)ind;
-        if (index < personDeck.size()) {
-            personHand.add(personDeck.get(index));
-            personDeck.remove(index);
-        } else {
-            index -= personDeck.size();
-            abilHand.add(abilDeck.get(index));
-            abilDeck.remove(index);
+        for (int i = 0; i < 2; i++) {
+            double ind = random.nextDouble() * deckSize;
+            int index = (int)ind;
+            hand[i] = deck.get(index);
         }
     }
 

@@ -3,6 +3,7 @@ import java.awt.event.*;
 public class UserInterface extends JFrame{
     private int CARD_WIDTH = 100;
     private int CARD_HEIGHT = 150;
+    private String[] inputs = new String[2];
 
     public UserInterface() {
         setBounds(100, 50, 900, 700);
@@ -34,65 +35,75 @@ public class UserInterface extends JFrame{
         this.add(b);
         */
 
-        JButton rowA = new JButton("Testing");
-        rowA.setBounds(10, 10, CARD_WIDTH, CARD_HEIGHT);
-        rowA.setVisible(true);
-        add(rowA);
+        JButton oppSL = new JButton("Secondary Left");
+        oppSL.setBounds(230, 10, CARD_WIDTH, CARD_HEIGHT);
+        oppSL.setVisible(true);
+        add(oppSL);
+
+        JButton oppSR = new JButton("Secondary Right");
+        oppSR.setBounds(450, 10, CARD_WIDTH, CARD_HEIGHT);
+        oppSR.setVisible(true);
+        add(oppSR);
 
         JButton oppTR = new JButton("Tertiary Right");
-        oppTR.setBounds(120, 10, CARD_WIDTH, CARD_HEIGHT);
+        oppTR.setBounds(120, 170, CARD_WIDTH, CARD_HEIGHT);
         oppTR.setVisible(true);
         add(oppTR);
 
         JButton oppActive = new JButton("Active");
-        oppActive.setBounds(340, 10, CARD_WIDTH, CARD_HEIGHT);
+        oppActive.setBounds(340, 170, CARD_WIDTH, CARD_HEIGHT);
         oppActive.setVisible(true);
         add(oppActive);
 
         JButton oppTL = new JButton("Tertiary Left");
-        oppTL.setBounds(560, 10, CARD_WIDTH, CARD_HEIGHT);
+        oppTL.setBounds(560, 170, CARD_WIDTH, CARD_HEIGHT);
         oppTL.setVisible(true);
         add(oppTL);
 
-        JButton rowB = new JButton("Testing");
-        rowB.setBounds(10, 170, CARD_WIDTH, CARD_HEIGHT);
-        rowB.setVisible(true);
-        add(rowB);
+        JButton oppDeck = new JButton("Deck");
+        oppDeck.setBounds(10, 170, CARD_WIDTH, CARD_HEIGHT);
+        oppDeck.setVisible(true);
+        add(oppDeck);
 
         JButton TL = new JButton("Tertiary Left");
-        TL.setBounds(120, 170, CARD_WIDTH, CARD_HEIGHT);
+        TL.setBounds(120, 330, CARD_WIDTH, CARD_HEIGHT);
         TL.setVisible(true);
         add(TL);
 
         JButton Active = new JButton("Active");
-        Active.setBounds(340, 170, CARD_WIDTH, CARD_HEIGHT);
+        Active.setBounds(340, 330, CARD_WIDTH, CARD_HEIGHT);
         Active.setVisible(true);
         add(Active);
 
         JButton TR = new JButton("Tertiary Right");
-        TR.setBounds(560, 170, CARD_WIDTH, CARD_HEIGHT);
+        TR.setBounds(560, 330, CARD_WIDTH, CARD_HEIGHT);
         TR.setVisible(true);
         add(TR);
 
-        JButton rowC = new JButton("Testing");
-        rowC.setBounds(10, 330, CARD_WIDTH, CARD_HEIGHT);
-        rowC.setVisible(true);
-        add(rowC);
+        JButton deck = new JButton("Deck");
+        deck.setBounds(725, 330, CARD_WIDTH, CARD_HEIGHT);
+        deck.setVisible(true);
+        add(deck);
 
         JButton SL = new JButton("Secondary Left");
-        SL.setBounds(230, 330, CARD_WIDTH, CARD_HEIGHT);
+        SL.setBounds(230, 490, CARD_WIDTH, CARD_HEIGHT);
         SL.setVisible(true);
         add(SL);
 
         JButton SR = new JButton("Secondary Right");
-        SR.setBounds(450, 330, CARD_WIDTH, CARD_HEIGHT);
+        SR.setBounds(450, 490, CARD_WIDTH, CARD_HEIGHT);
         SR.setVisible(true);
         add(SR);
 
-        JButton rowD = new JButton("Testing");
-        rowD.setBounds(10, 490, CARD_WIDTH, CARD_HEIGHT);
-        rowD.setVisible(true);
-        add(rowD);
+        JButton opt1 = new JButton("Option 1");
+        opt1.setBounds(670, 490, CARD_WIDTH, CARD_HEIGHT);
+        opt1.setVisible(true);
+        add(opt1);
+
+        JButton opt2 = new JButton("Option 2");
+        opt2.setBounds(780, 490, CARD_WIDTH, CARD_HEIGHT);
+        opt2.setVisible(true);
+        add(opt2);
     }
     
     public static String getInput() {

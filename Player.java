@@ -5,10 +5,7 @@ public class Player {
     private ArrayList<Ability> deck = new ArrayList<Ability>();
     private Ability[] hand = new Ability[2];
     private Person active = null;
-    private Person secondaryL = null;
-    private Person secondaryR = null;
-    private Person tertiaryL = null;
-    private Person tertiaryR = null;
+    private Person[] persons = new Person[4];
 
     public Player(ArrayList<Ability> aDeck) {
         deck = aDeck;
@@ -20,62 +17,46 @@ public class Player {
     public int handSize() {
         return deck.size();
     }
-    public Ability[] getHand() {
-        return hand;
+    public Ability getHand(int index) {
+        return hand[index];
     }
 
     public Person getActive() {
         return active;
     }
-    public Person getSecondaryL() {
-        return secondaryL;
+    public void addAbility(int index, Ability a) {
+        persons[index].addAbility(a);
     }
-    public Person getSecondaryR() {
-        return secondaryR;
+    public void addEnergy(int index) {
+        persons[index].addEnergy(1);
     }
-    public Person getTertiaryL() {
-        return tertiaryL;
-    }
-    public Person getTertiaryR() {
-        return tertiaryR;
+    public void setActive(int index) {
+        active = persons[index];
     }
 
     public void deckDraw() {
         int deckSize = deckSize();
-        if (deckSize <= 0) {
-            return;
-        }
-        for (int i = 0; i < 2; i++) {
+        if (deckSize >= 2) {
+            for (int i = 0; i < 2; i++) {
+                double ind = random.nextDouble() * deckSize;
+                int index = (int)ind;
+                hand[i] = deck.get(index);
+            }
+        } else if (deckSize == 1) {
             double ind = random.nextDouble() * deckSize;
             int index = (int)ind;
-            hand[i] = deck.get(index);
+            hand[0] = deck.get(index);
+            hand[1] = null;
         }
     }
 
     public boolean checkSlots() {
-        if (active == null) {
-            return true;
-        } else {
-            return false;
+        for (Person p : persons) {
+            if (p.getHealth() <= 0) {
+                return false;
+            }
         }
-    }
-
-    public void healthUpdate() {
-        if (active.getHealth() <= 0) {
-            active = null;
-        }
-        if (secondaryL.getHealth() <= 0) {
-            secondaryL = null;
-        }
-        if (secondaryR.getHealth() <= 0) {
-            secondaryR = null;
-        }
-        if (tertiaryL.getHealth() <= 0) {
-            tertiaryL = null;
-        }
-        if (tertiaryR.getHealth() <= 0) {
-            tertiaryR = null;
-        }
+        return true;
     }
 
     public static void doAttack(Player attacker, int attackIndex, Player defender) {

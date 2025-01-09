@@ -6,8 +6,8 @@ public class Person extends Card{
     private int health;
     final private int MAX_HEALTH;
 
-    public Person(String name, int moveCost, ArrayList<Ability> abilities, int max) {
-        super(name);
+    public Person(String name, String image, int moveCost, ArrayList<Ability> abilities, int max) {
+        super(name, image);
         this.moveCost = moveCost;
         energy = 0;
         this.abilities = abilities;

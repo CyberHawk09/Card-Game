@@ -2,8 +2,8 @@ public class Ability extends Card{
     private int damage;
     private int attackCost;
     
-    public Ability(String name, int damage, int attackCost) {
-        super(name);
+    public Ability(String name, String image, int damage, int attackCost) {
+        super(name, image);
         this.damage = damage;
         this.attackCost = attackCost;
     }

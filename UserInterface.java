@@ -1,15 +1,24 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.*;
 public class UserInterface extends JFrame{
     private int CARD_WIDTH = 100;
     private int CARD_HEIGHT = 150;
-    private String[] inputs = new String[2];
+    private static int lastClick = 7;
+    private JButton[] persons = new JButton[4];
 
     public UserInterface() {
         setBounds(100, 50, 900, 700);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
+    }
+
+    public int getLastClick() {
+        return lastClick;
+    }
+    public void setLastClick(int num) {
+        lastClick = num;
     }
 
     public void gameScreen() {
@@ -60,40 +69,43 @@ public class UserInterface extends JFrame{
         oppTL.setVisible(true);
         add(oppTL);
 
-        JButton oppDeck = new JButton("Deck");
+        Icon testimg = new ImageIcon("C:\\Users\\Gregory\\Desktop\\Comp_Sci_11_AP\\Card-Game\\Capture.PNG");
+        JButton oppDeck = new JButton(testimg);
         oppDeck.setBounds(10, 170, CARD_WIDTH, CARD_HEIGHT);
+        oppDeck.setIcon(new ImageIcon("C:\\Users\\Gregory\\Desktop\\Comp_Sci_11_AP\\Card-Game\\Capture.PNG"));
         oppDeck.setVisible(true);
         add(oppDeck);
 
-        JButton TL = new JButton("Tertiary Left");
-        TL.setBounds(120, 330, CARD_WIDTH, CARD_HEIGHT);
-        TL.setVisible(true);
-        add(TL);
+        //Current Player
+        persons[0] = new JButton("Tertiary Left");
+        persons[0].setBounds(120, 330, CARD_WIDTH, CARD_HEIGHT);
+        persons[0].setVisible(true);
+        add(persons[0]);
 
+        persons[1] = new JButton("Tertiary Right");
+        persons[1].setBounds(560, 330, CARD_WIDTH, CARD_HEIGHT);
+        persons[1].setVisible(true);
+        add(persons[1]);
+
+        persons[2] = new JButton("Secondary Left");
+        persons[2].setBounds(230, 490, CARD_WIDTH, CARD_HEIGHT);
+        persons[2].setVisible(true);
+        add(persons[2]);
+
+        persons[3] = new JButton("Secondary Right");
+        persons[3].setBounds(450, 490, CARD_WIDTH, CARD_HEIGHT);
+        persons[3].setVisible(true);
+        add(persons[3]);
+        
         JButton Active = new JButton("Active");
         Active.setBounds(340, 330, CARD_WIDTH, CARD_HEIGHT);
         Active.setVisible(true);
         add(Active);
 
-        JButton TR = new JButton("Tertiary Right");
-        TR.setBounds(560, 330, CARD_WIDTH, CARD_HEIGHT);
-        TR.setVisible(true);
-        add(TR);
-
         JButton deck = new JButton("Deck");
         deck.setBounds(725, 330, CARD_WIDTH, CARD_HEIGHT);
         deck.setVisible(true);
         add(deck);
-
-        JButton SL = new JButton("Secondary Left");
-        SL.setBounds(230, 490, CARD_WIDTH, CARD_HEIGHT);
-        SL.setVisible(true);
-        add(SL);
-
-        JButton SR = new JButton("Secondary Right");
-        SR.setBounds(450, 490, CARD_WIDTH, CARD_HEIGHT);
-        SR.setVisible(true);
-        add(SR);
 
         JButton opt1 = new JButton("Option 1");
         opt1.setBounds(670, 490, CARD_WIDTH, CARD_HEIGHT);
@@ -104,6 +116,16 @@ public class UserInterface extends JFrame{
         opt2.setBounds(780, 490, CARD_WIDTH, CARD_HEIGHT);
         opt2.setVisible(true);
         add(opt2);
+
+        for (int i = 0; i < persons.length; i++) {
+            final int j = i;
+            persons[i].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setLastClick(j);
+                }
+            });
+        }
+        repaint();
     }
     
     public static String getInput() {

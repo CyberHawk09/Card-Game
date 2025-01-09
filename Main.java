@@ -1,74 +1,66 @@
-import java.util.Scanner;
+import java.util.ArrayList;
 public class Main {
-    public static void runGame(Player p1, Player p2) {
-        boolean gameOver = false;
-        boolean p1Slots = false;
-        boolean p2Slots = false;
+    public static void runGame(Player p1, Player p2, UserInterface frame) {
         boolean p1Turn = true;
 
-        while (!gameOver) {
+        while (true) {
             if (p1Turn) {
-                runTurn(p1, p2);
-                p2.healthUpdate();
                 if (!p1.checkSlots()) {
-                    gameOver = true;
+                    break;
                 }
+                runTurn(p1, p2, frame);
                 p1Turn = false;
             } else {
-                runTurn(p2, p1);
-                p1.healthUpdate();
                 if (!p2.checkSlots()) {
-                    gameOver = true;
+                    break;
                 }
+                runTurn(p2, p1, frame);
                 p1Turn = true;
             }
         }
     }
-    public static void runTurn(Player p1, Player p2) {
+    public static void runTurn(Player p1, Player p2, UserInterface frame) {
+        //Add Ability
+        p1.deckDraw();
+        while (frame.getLastClick() > 5) {
+            //wait
+        }
+        Ability abil = p1.getHand(frame.getLastClick() - 4);
+        frame.setLastClick(7);
+
+        while (frame.getLastClick() > 3) {
+            //wait
+        }
+        p1.addAbility(frame.getLastClick(), abil);
+        frame.setLastClick(7);
+
+        //Add Energy
         for (int i = 0; i < 4; i++) {
-            String card = UserInterface.getInput();
-            switch (card) {
-                case "active":
-                    if (p1.getActive() == null) {
-                        i--;
-                    } else {
-                        p1.getActive().addEnergy(1);
-                    }
-                case "sL":
-                    if (p1.getSecondaryL() == null) {
-                        i--;
-                    } else {
-                        p1.getSecondaryL().addEnergy(1);
-                    }
-                case "sR":
-                    if (p1.getSecondaryR() == null) {
-                        i--;
-                    } else {
-                        p1.getSecondaryR().addEnergy(1);
-                    }
-                case "tL":
-                    if (p1.getTertiaryL() == null) {
-                        i--;
-                    } else {
-                        p1.getTertiaryL().addEnergy(1);
-                    }
-                case "tR":
-                    if (p1.getTertiaryR() == null) {
-                        i--;
-                    } else {
-                        p1.getTertiaryR().addEnergy(1);
-                    }
-                case "deck":
-                    if (p1.deckSize() <= 0) {
-                        i--;
-                    }
-                    p1.deckDraw();
+            while (frame.getLastClick() > 3) {
+                //wait
+            }
+            p1.addEnergy(frame.getLastClick());
+            frame.setLastClick(7);
+        }
+
+        //Add Active
+        while (frame.getLastClick() > 3) {
+            //wait
+        }
+        p1.setActive(frame.getLastClick());
+        frame.setLastClick(7);
+
+        //Do Attack
+        ArrayList<Ability> activeAbils = p1.getActive().getAbilities();
+        int highCost = 0;
+        int highIndex = -1;
+        for (int i = 0; i < activeAbils.size(); i++) {
+            if (activeAbils.get(i).getAttackCost() >= highCost) {
+                highIndex = i;
             }
         }
-        boolean endTurn = false;
-        while (!endTurn) {
-            String select1 = UserInterface.getInput();
-            
+        if (highIndex >= 0) {
+            Player.doAttack(p1, highIndex, p2);
         }
     }
     public static void main (String[] args) {

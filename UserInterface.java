@@ -5,7 +5,8 @@ public class UserInterface extends JFrame{
     private int CARD_WIDTH = 100;
     private int CARD_HEIGHT = 150;
     private static int lastClick = 7;
-    private JButton[] persons = new JButton[4];
+    private JButton[] persons1Buttons = new JButton[4];
+    private JLabel[] persons1Labels = new JLabel[4];
 
     public UserInterface() {
         setBounds(100, 50, 900, 700);
@@ -19,6 +20,10 @@ public class UserInterface extends JFrame{
     }
     public void setLastClick(int num) {
         lastClick = num;
+    }
+
+    public void update(){
+        repaint();
     }
 
     public void gameScreen() {
@@ -69,33 +74,49 @@ public class UserInterface extends JFrame{
         oppTL.setVisible(true);
         add(oppTL);
 
+        /* 
         Icon testimg = new ImageIcon("C:\\Users\\Gregory\\Desktop\\Comp_Sci_11_AP\\Card-Game\\Capture.PNG");
-        JButton oppDeck = new JButton(testimg);
+        JButton oppDeck = new JButton("yap", testimg);
         oppDeck.setBounds(10, 170, CARD_WIDTH, CARD_HEIGHT);
-        oppDeck.setIcon(new ImageIcon("C:\\Users\\Gregory\\Desktop\\Comp_Sci_11_AP\\Card-Game\\Capture.PNG"));
+        //oppDeck.setIcon(new ImageIcon("C:\\Users\\Gregory\\Desktop\\Comp_Sci_11_AP\\Card-Game\\craiyon_131032_A_knight_with_torch_in_a_dungeon__pixel_art.png"));
+        oppDeck.setText("yas");
+        oppDeck.setVerticalTextPosition(SwingConstants.TOP);
+        oppDeck.setHorizontalTextPosition(SwingConstants.LEFT);
+        oppDeck.setVisible(true);
+        add(oppDeck);
+        */
+        Icon testimg = new ImageIcon("C:\\\\Users\\\\Gregory\\\\Desktop\\\\Comp_Sci_11_AP\\\\Card-Game\\\\Capture.PNG");
+        JButton oppDeck = new JButton(testimg); // Set text and icon during initialization
+        oppDeck.setBounds(10, 170, CARD_WIDTH, CARD_HEIGHT);
+        JLabel label0 = new JLabel("<html>FINALLY<br/>I<br/>GOT IT</html>");
+        label0.setBounds(10, 170, 100, 100);
+        label0.setVisible(true);
+        add(label0);
         oppDeck.setVisible(true);
         add(oppDeck);
 
         //Current Player
-        persons[0] = new JButton("Tertiary Left");
-        persons[0].setBounds(120, 330, CARD_WIDTH, CARD_HEIGHT);
-        persons[0].setVisible(true);
-        add(persons[0]);
+        persons1Buttons[0] = new JButton("<html>FINALLY<br/>I<br/>GOT IT</html>");
+        persons1Buttons[0].setBounds(120, 330, CARD_WIDTH, CARD_HEIGHT);
+        persons1Buttons[0].setVisible(true);
+        persons1Buttons[0].setToolTipText("<html>Naah <br />yo</html>");
 
-        persons[1] = new JButton("Tertiary Right");
-        persons[1].setBounds(560, 330, CARD_WIDTH, CARD_HEIGHT);
-        persons[1].setVisible(true);
-        add(persons[1]);
+        add(persons1Buttons[0]);
 
-        persons[2] = new JButton("Secondary Left");
-        persons[2].setBounds(230, 490, CARD_WIDTH, CARD_HEIGHT);
-        persons[2].setVisible(true);
-        add(persons[2]);
+        persons1Buttons[1] = new JButton("Tertiary Right");
+        persons1Buttons[1].setBounds(560, 330, CARD_WIDTH, CARD_HEIGHT);
+        persons1Buttons[1].setVisible(true);
+        add(persons1Buttons[1]);
 
-        persons[3] = new JButton("Secondary Right");
-        persons[3].setBounds(450, 490, CARD_WIDTH, CARD_HEIGHT);
-        persons[3].setVisible(true);
-        add(persons[3]);
+        persons1Buttons[2] = new JButton("Secondary Left");
+        persons1Buttons[2].setBounds(230, 490, CARD_WIDTH, CARD_HEIGHT);
+        persons1Buttons[2].setVisible(true);
+        add(persons1Buttons[2]);
+
+        persons1Buttons[3] = new JButton("Secondary Right");
+        persons1Buttons[3].setBounds(450, 490, CARD_WIDTH, CARD_HEIGHT);
+        persons1Buttons[3].setVisible(true);
+        add(persons1Buttons[3]);
         
         JButton Active = new JButton("Active");
         Active.setBounds(340, 330, CARD_WIDTH, CARD_HEIGHT);
@@ -117,23 +138,15 @@ public class UserInterface extends JFrame{
         opt2.setVisible(true);
         add(opt2);
 
-        for (int i = 0; i < persons.length; i++) {
+        for (int i = 0; i < persons1Buttons.length; i++) {
             final int j = i;
-            persons[i].addActionListener(new ActionListener() {
+            persons1Buttons[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setLastClick(j);
+                    update();
                 }
             });
         }
         repaint();
     }
-    
-    public static String getInput() {
-        /* 
-        Scanner console = new Scanner(System.in);
-        System.out.println("What card would you like to add energy to?");
-        String input = console.nextLine();
-        console.close();
-        return input; */
-    } 
 }

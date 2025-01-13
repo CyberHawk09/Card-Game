@@ -5,8 +5,8 @@ public class UserInterface extends JFrame{
     private int CARD_WIDTH = 100;
     private int CARD_HEIGHT = 150;
     private static int lastClick = 7;
-    private JButton[] persons1Buttons = new JButton[4];
-    private JLabel[] persons1Labels = new JLabel[4];
+    private JButton[] cards = new JButton[4];
+    private JLabel[] oppCards = new JLabel[4];
 
     public UserInterface() {
         setBounds(100, 50, 900, 700);
@@ -22,7 +22,27 @@ public class UserInterface extends JFrame{
         lastClick = num;
     }
 
-    public void update(){
+    public void update() {
+        repaint();
+    }
+    public void update(Player p1, Player p2) {
+        for (int i = 0; i < cards.length; i++) {
+            Person person = p1.getPerson(i);
+            String name = person.getName();
+            String spacing = "<br/><br/><br/><br/><br/><br/>";
+            String health = "Health: " + person.getHealth() + "/" + person.getMaxHealth();
+            String energy = "Energy: " + person.getEnergy();
+            cards[i].setText("<html>" + name + spacing + health + "<br/>" + energy + "</html>");
+
+            String abilities = person.getAbilities().toString();
+            //cards[i].setToolTipText(abilities.substring(1, abilities.length() - 1));
+            JLabel j = new JLabel("<html>Fireball   E:4 D:3" + "<br/>Heal   E:1 H:3</html>");
+            j.setBounds(100, 480, CARD_WIDTH, CARD_HEIGHT);
+            j.setVisible(true);
+            add(j);
+
+            cards[i].setIcon(new ImageIcon(person.getImage()));
+        }
         repaint();
     }
 
@@ -74,51 +94,33 @@ public class UserInterface extends JFrame{
         oppTL.setVisible(true);
         add(oppTL);
 
-        /* 
-        Icon testimg = new ImageIcon("C:\\Users\\Gregory\\Desktop\\Comp_Sci_11_AP\\Card-Game\\Capture.PNG");
-        JButton oppDeck = new JButton("yap", testimg);
+        Icon testimg = new ImageIcon("C:\\Users\\Cyber_Hawk09\\OneDrive\\Desktop\\Earl of March\\Grade_11_AP_Comp_Sci\\Card-Game\\Capture.PNG");
+        JButton oppDeck = new JButton(testimg);
         oppDeck.setBounds(10, 170, CARD_WIDTH, CARD_HEIGHT);
-        //oppDeck.setIcon(new ImageIcon("C:\\Users\\Gregory\\Desktop\\Comp_Sci_11_AP\\Card-Game\\craiyon_131032_A_knight_with_torch_in_a_dungeon__pixel_art.png"));
-        oppDeck.setText("yas");
-        oppDeck.setVerticalTextPosition(SwingConstants.TOP);
-        oppDeck.setHorizontalTextPosition(SwingConstants.LEFT);
-        oppDeck.setVisible(true);
-        add(oppDeck);
-        */
-        Icon testimg = new ImageIcon("C:\\\\Users\\\\Gregory\\\\Desktop\\\\Comp_Sci_11_AP\\\\Card-Game\\\\Capture.PNG");
-        JButton oppDeck = new JButton(testimg); // Set text and icon during initialization
-        oppDeck.setBounds(10, 170, CARD_WIDTH, CARD_HEIGHT);
-        oppDeck.setText("<html>FINALLY<br/>I<br/>GOT IT</html>");
-        oppDeck.setBounds(10, 170, 100, 100);
-        oppDeck.setHorizontalTextPosition(SwingConstants.CENTER);
-        oppDeck.setVerticalTextPosition(SwingConstants.CENTER);
+        oppDeck.setIcon(new ImageIcon("C:\\Users\\Cyber_Hawk09\\OneDrive\\Desktop\\Earl of March\\Grade_11_AP_Comp_Sci\\Card-Game\\Capture.PNG"));
         oppDeck.setVisible(true);
         add(oppDeck);
 
         //Current Player
-        persons1Buttons[0] = new JButton("<html>Knight<br/><br/><br/><br/><br/>Health: 10/10<br/>Energy: 6</html>");
-        persons1Buttons[0].setBounds(120, 330, CARD_WIDTH, CARD_HEIGHT);
-        persons1Buttons[0].setVisible(true);
-        persons1Buttons[0].setIconTextGap(0);
-        persons1Buttons[0].setIcon(new ImageIcon("C:\\Users\\Gregory\\Desktop\\Comp_Sci_11_AP\\Card-Game\\Knight.png"));
-        persons1Buttons[0].setToolTipText("<html>Naah <br />yo</html>");
+        cards[0] = new JButton("Tertiary Left");
+        cards[0].setBounds(120, 330, CARD_WIDTH, CARD_HEIGHT);
+        cards[0].setVisible(true);
+        add(cards[0]);
 
-        add(persons1Buttons[0]);
+        cards[1] = new JButton("Tertiary Right");
+        cards[1].setBounds(560, 330, CARD_WIDTH, CARD_HEIGHT);
+        cards[1].setVisible(true);
+        add(cards[1]);
 
-        persons1Buttons[1] = new JButton("Tertiary Right");
-        persons1Buttons[1].setBounds(560, 330, CARD_WIDTH, CARD_HEIGHT);
-        persons1Buttons[1].setVisible(true);
-        add(persons1Buttons[1]);
+        cards[2] = new JButton("Secondary Left");
+        cards[2].setBounds(230, 490, CARD_WIDTH, CARD_HEIGHT);
+        cards[2].setVisible(true);
+        add(cards[2]);
 
-        persons1Buttons[2] = new JButton("Secondary Left");
-        persons1Buttons[2].setBounds(230, 490, CARD_WIDTH, CARD_HEIGHT);
-        persons1Buttons[2].setVisible(true);
-        add(persons1Buttons[2]);
-
-        persons1Buttons[3] = new JButton("Secondary Right");
-        persons1Buttons[3].setBounds(450, 490, CARD_WIDTH, CARD_HEIGHT);
-        persons1Buttons[3].setVisible(true);
-        add(persons1Buttons[3]);
+        cards[3] = new JButton("Secondary Right");
+        cards[3].setBounds(450, 490, CARD_WIDTH, CARD_HEIGHT);
+        cards[3].setVisible(true);
+        add(cards[3]);
         
         JButton Active = new JButton("Active");
         Active.setBounds(340, 330, CARD_WIDTH, CARD_HEIGHT);
@@ -140,15 +142,24 @@ public class UserInterface extends JFrame{
         opt2.setVisible(true);
         add(opt2);
 
-        for (int i = 0; i < persons1Buttons.length; i++) {
+        for (int i = 0; i < cards.length; i++) {
             final int j = i;
-            persons1Buttons[i].addActionListener(new ActionListener() {
+            cards[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setLastClick(j);
                     update();
                 }
             });
         }
-        repaint();
+        update();
     }
+    
+    public static String getInput() {
+        /* 
+        Scanner console = new Scanner(System.in);
+        System.out.println("What card would you like to add energy to?");
+        String input = console.nextLine();
+        console.close();
+        return input; */
+    } 
 }

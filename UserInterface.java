@@ -5,7 +5,8 @@ public class UserInterface extends JFrame{
     private int CARD_WIDTH = 100;
     private int CARD_HEIGHT = 150;
     private static int lastClick = 7;
-    private JButton[] persons = new JButton[4];
+    private JButton[] cards = new JButton[4];
+    private JLabel[] oppCards = new JLabel[4];
 
     public UserInterface() {
         setBounds(100, 50, 900, 700);
@@ -19,6 +20,30 @@ public class UserInterface extends JFrame{
     }
     public void setLastClick(int num) {
         lastClick = num;
+    }
+
+    public void update() {
+        repaint();
+    }
+    public void update(Player p1, Player p2) {
+        for (int i = 0; i < cards.length; i++) {
+            Person person = p1.getPerson(i);
+            String name = person.getName();
+            String spacing = "<br/><br/><br/><br/><br/><br/>";
+            String health = "Health: " + person.getHealth() + "/" + person.getMaxHealth();
+            String energy = "Energy: " + person.getEnergy();
+            cards[i].setText("<html>" + name + spacing + health + "<br/>" + energy + "</html>");
+
+            String abilities = person.getAbilities().toString();
+            //cards[i].setToolTipText(abilities.substring(1, abilities.length() - 1));
+            JLabel j = new JLabel("<html>Fireball   E:4 D:3" + "<br/>Heal   E:1 H:3</html>");
+            j.setBounds(100, 480, CARD_WIDTH, CARD_HEIGHT);
+            j.setVisible(true);
+            add(j);
+
+            cards[i].setIcon(new ImageIcon(person.getImage()));
+        }
+        repaint();
     }
 
     public void gameScreen() {
@@ -69,33 +94,33 @@ public class UserInterface extends JFrame{
         oppTL.setVisible(true);
         add(oppTL);
 
-        Icon testimg = new ImageIcon("C:\\Users\\Gregory\\Desktop\\Comp_Sci_11_AP\\Card-Game\\Capture.PNG");
+        Icon testimg = new ImageIcon("C:\\Users\\Cyber_Hawk09\\OneDrive\\Desktop\\Earl of March\\Grade_11_AP_Comp_Sci\\Card-Game\\Capture.PNG");
         JButton oppDeck = new JButton(testimg);
         oppDeck.setBounds(10, 170, CARD_WIDTH, CARD_HEIGHT);
-        oppDeck.setIcon(new ImageIcon("C:\\Users\\Gregory\\Desktop\\Comp_Sci_11_AP\\Card-Game\\Capture.PNG"));
+        oppDeck.setIcon(new ImageIcon("C:\\Users\\Cyber_Hawk09\\OneDrive\\Desktop\\Earl of March\\Grade_11_AP_Comp_Sci\\Card-Game\\Capture.PNG"));
         oppDeck.setVisible(true);
         add(oppDeck);
 
         //Current Player
-        persons[0] = new JButton("Tertiary Left");
-        persons[0].setBounds(120, 330, CARD_WIDTH, CARD_HEIGHT);
-        persons[0].setVisible(true);
-        add(persons[0]);
+        cards[0] = new JButton("Tertiary Left");
+        cards[0].setBounds(120, 330, CARD_WIDTH, CARD_HEIGHT);
+        cards[0].setVisible(true);
+        add(cards[0]);
 
-        persons[1] = new JButton("Tertiary Right");
-        persons[1].setBounds(560, 330, CARD_WIDTH, CARD_HEIGHT);
-        persons[1].setVisible(true);
-        add(persons[1]);
+        cards[1] = new JButton("Tertiary Right");
+        cards[1].setBounds(560, 330, CARD_WIDTH, CARD_HEIGHT);
+        cards[1].setVisible(true);
+        add(cards[1]);
 
-        persons[2] = new JButton("Secondary Left");
-        persons[2].setBounds(230, 490, CARD_WIDTH, CARD_HEIGHT);
-        persons[2].setVisible(true);
-        add(persons[2]);
+        cards[2] = new JButton("Secondary Left");
+        cards[2].setBounds(230, 490, CARD_WIDTH, CARD_HEIGHT);
+        cards[2].setVisible(true);
+        add(cards[2]);
 
-        persons[3] = new JButton("Secondary Right");
-        persons[3].setBounds(450, 490, CARD_WIDTH, CARD_HEIGHT);
-        persons[3].setVisible(true);
-        add(persons[3]);
+        cards[3] = new JButton("Secondary Right");
+        cards[3].setBounds(450, 490, CARD_WIDTH, CARD_HEIGHT);
+        cards[3].setVisible(true);
+        add(cards[3]);
         
         JButton Active = new JButton("Active");
         Active.setBounds(340, 330, CARD_WIDTH, CARD_HEIGHT);
@@ -117,15 +142,15 @@ public class UserInterface extends JFrame{
         opt2.setVisible(true);
         add(opt2);
 
-        for (int i = 0; i < persons.length; i++) {
+        for (int i = 0; i < cards.length; i++) {
             final int j = i;
-            persons[i].addActionListener(new ActionListener() {
+            cards[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setLastClick(j);
                 }
             });
         }
-        repaint();
+        update();
     }
     
     public static String getInput() {

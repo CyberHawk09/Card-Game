@@ -27,6 +27,9 @@ public class Person extends Card{
     public int getHealth() {
         return health;
     }
+    public int getMaxHealth() {
+        return MAX_HEALTH;
+    }
     public void addEnergy(int num) {
         if (num > 0) {
             energy += num;

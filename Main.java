@@ -103,5 +103,19 @@ public class Main {
         */
         UserInterface frame = new UserInterface();
         frame.gameScreen();
+
+        ArrayList<Ability> abils = new ArrayList<Ability>();
+        Ability a = new Ability("a", "test", 3, 1);
+        abils.add(a);
+        abils.add(a);
+        abils.add(a);
+        abils.add(a);
+        abils.add(a);
+        abils.add(a);
+        Person p = new Person("p", "test", 3, new ArrayList<Ability>(), 3);
+        Person[] persons = {p, p, p, p};
+        Player p1 = new Player(abils, persons);
+        Player p2 = p1;
+        frame.update(p1, p2);
     }
 }

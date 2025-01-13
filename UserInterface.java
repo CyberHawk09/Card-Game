@@ -88,17 +88,19 @@ public class UserInterface extends JFrame{
         Icon testimg = new ImageIcon("C:\\\\Users\\\\Gregory\\\\Desktop\\\\Comp_Sci_11_AP\\\\Card-Game\\\\Capture.PNG");
         JButton oppDeck = new JButton(testimg); // Set text and icon during initialization
         oppDeck.setBounds(10, 170, CARD_WIDTH, CARD_HEIGHT);
-        JLabel label0 = new JLabel("<html>FINALLY<br/>I<br/>GOT IT</html>");
-        label0.setBounds(10, 170, 100, 100);
-        label0.setVisible(true);
-        add(label0);
+        oppDeck.setText("<html>FINALLY<br/>I<br/>GOT IT</html>");
+        oppDeck.setBounds(10, 170, 100, 100);
+        oppDeck.setHorizontalTextPosition(SwingConstants.CENTER);
+        oppDeck.setVerticalTextPosition(SwingConstants.CENTER);
         oppDeck.setVisible(true);
         add(oppDeck);
 
         //Current Player
-        persons1Buttons[0] = new JButton("<html>FINALLY<br/>I<br/>GOT IT</html>");
+        persons1Buttons[0] = new JButton("<html>Knight<br/><br/><br/><br/><br/>Health: 10/10<br/>Energy: 6</html>");
         persons1Buttons[0].setBounds(120, 330, CARD_WIDTH, CARD_HEIGHT);
         persons1Buttons[0].setVisible(true);
+        persons1Buttons[0].setIconTextGap(0);
+        persons1Buttons[0].setIcon(new ImageIcon("C:\\Users\\Gregory\\Desktop\\Comp_Sci_11_AP\\Card-Game\\Knight.png"));
         persons1Buttons[0].setToolTipText("<html>Naah <br />yo</html>");
 
         add(persons1Buttons[0]);

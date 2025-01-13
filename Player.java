@@ -24,6 +24,9 @@ public class Player {
     public Person getActive() {
         return persons[active];
     }
+    public int getActiveIndex() {
+        return active;
+    }
     public Person getPerson(int index) {
         return persons[index];
     }

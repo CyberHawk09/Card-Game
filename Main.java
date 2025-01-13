@@ -3,6 +3,7 @@ public class Main {
     public static void runGame(Player p1, Player p2, UserInterface frame) {
         boolean p1Turn = true;
 
+        frame.gameScreen();
         while (true) {
             if (p1Turn) {
                 if (!p1.checkSlots()) {
@@ -105,15 +106,16 @@ public class Main {
         frame.gameScreen();
 
         ArrayList<Ability> abils = new ArrayList<Ability>();
-        Ability a = new Ability("a", "test", 3, 1);
+        Ability a = new Ability("Fireball", "test", 3, 1);
         abils.add(a);
         abils.add(a);
         abils.add(a);
         abils.add(a);
         abils.add(a);
         abils.add(a);
-        Person p = new Person("p", "test", 3, new ArrayList<Ability>(), 3);
-        Person[] persons = {p, p, p, p};
+        Person p = new Person("p", "test", 3, abils, 3);
+        Person pa = new Person("knight", "test", 7, abils, 4);
+        Person[] persons = {pa, p, p, p};
         Player p1 = new Player(abils, persons);
         Player p2 = p1;
         frame.update(p1, p2);

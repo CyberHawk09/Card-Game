@@ -147,6 +147,7 @@ public class UserInterface extends JFrame{
             cards[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setLastClick(j);
+                    update();
                 }
             });
         }

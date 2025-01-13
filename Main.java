@@ -23,13 +23,13 @@ public class Main {
         //Add Ability
         p1.deckDraw();
         while (frame.getLastClick() > 5) {
-            //wait
+            frame.update();
         }
         Ability abil = p1.getHand(frame.getLastClick() - 4);
         frame.setLastClick(7);
 
         while (frame.getLastClick() > 3) {
-            //wait
+            frame.update();
         }
         p1.addAbility(frame.getLastClick(), abil);
         frame.setLastClick(7);
@@ -37,7 +37,7 @@ public class Main {
         //Add Energy
         for (int i = 0; i < 4; i++) {
             while (frame.getLastClick() > 3) {
-                //wait
+                frame.update();
             }
             p1.addEnergy(frame.getLastClick());
             frame.setLastClick(7);
@@ -45,7 +45,7 @@ public class Main {
 
         //Add Active
         while (frame.getLastClick() > 3) {
-            //wait
+            frame.update();
         }
         p1.setActive(frame.getLastClick());
         frame.setLastClick(7);

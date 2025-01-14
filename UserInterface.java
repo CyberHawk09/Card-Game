@@ -85,18 +85,22 @@ public class UserInterface extends JFrame{
 
         for (int i = 0; i < options.length; i++) {
             Ability opt = p1.getHand(i);
-            String name = opt.getName();
-            String spacing = "<br/><br/><br/><br/><br/><br/>";
-            String energy = "Energy Cost: " + opt.getAttackCost();
-            String damage;
-            if (opt.getDamage() > 0) {
-                damage = "Damage: " + opt.getDamage();
+            if (opt == null) {
+                options[i].setVisible(false);
             } else {
-                damage = "Heals: " + (opt.getDamage() * -1);
+                String name = opt.getName();
+                String spacing = "<br/><br/><br/><br/><br/><br/>";
+                String energy = "Energy Cost: " + opt.getAttackCost();
+                String damage;
+                if (opt.getDamage() > 0) {
+                    damage = "Damage: " + opt.getDamage();
+                } else {
+                    damage = "Heals: " + (opt.getDamage() * -1);
+                }
+                String setText = "<html>" + name + spacing + energy + "<br/>" + damage + "</html>";
+                options[i].setText(setText);
+                options[i].setIcon(new ImageIcon(opt.getImage()));
             }
-            String setText = "<html>" + name + spacing + energy + "<br/>" + damage + "</html>";
-            options[i].setText(setText);
-            options[i].setIcon(new ImageIcon(opt.getImage()));
         }
 
         repaint();

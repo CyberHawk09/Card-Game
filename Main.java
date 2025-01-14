@@ -30,15 +30,16 @@ public class Main {
         frame.setLastClick(7);
 
         while (frame.getLastClick() > 3) {
-            frame.update();
+            frame.update(p1, p2);
         }
         p1.addAbility(frame.getLastClick(), abil);
         frame.setLastClick(7);
+        ///p1.deckReset(abil);
 
         //Add Energy
         for (int i = 0; i < 4; i++) {
             while (frame.getLastClick() > 3) {
-                frame.update();
+                frame.update(p1, p2);
             }
             p1.addEnergy(frame.getLastClick());
             frame.setLastClick(7);
@@ -46,7 +47,7 @@ public class Main {
 
         //Add Active
         while (frame.getLastClick() > 3) {
-            frame.update();
+            frame.update(p1, p2);
         }
         p1.setActive(frame.getLastClick());
         frame.setLastClick(7);
@@ -119,5 +120,7 @@ public class Main {
         Player p1 = new Player(abils, persons);
         Player p2 = p1;
         frame.update(p1, p2);
+
+        runGame(p1, p2, frame);
     }
 }

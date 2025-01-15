@@ -42,27 +42,28 @@ public class Player {
 
     public void deckDraw() {
         int deckSize = deckSize();
+        int repetitions = 0;
         if (deckSize >= 2) {
-            for (int i = 0; i < 2; i++) {
-                double ind = random.nextDouble() * deckSize;
-                int index = (int)ind;
-                hand[i] = deck.get(index);
-                deck.remove(index);
-            }
+            repetitions = 2;
         } else if (deckSize == 1) {
-            double ind = random.nextDouble() * deckSize;
-            int index = (int)ind;
-            hand[0] = deck.get(index);
-            hand[1] = null;
+            repetitions = 1;
+        }
+        for (int i = 0; i < repetitions; i++) {
+            //double ind = random.nextDouble() * deckSize - 1;
+            //int index = (int)ind;
+            int index = random.nextInt(deckSize - 1);
+            hand[i] = deck.get(index);
             deck.remove(index);
         }
     }
-    public void deckReset(Ability unchosen) {
+    public void deckReset(Ability chosen) {
+        if (chosen.compareTo(hand[0]) == 0) {
+            deck.add(hand[1]);
+        } else {
+            deck.add(hand[0]);
+        }
         hand[0] = null;
         hand[1] = null;
-        if (unchosen != null) {
-            deck.add(unchosen);
-        }
     }
 
     public boolean checkSlots() {

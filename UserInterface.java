@@ -1,15 +1,19 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.Font;
 import java.awt.event.*;
+import java.util.ArrayList;
 public class UserInterface extends JFrame{
     private int CARD_WIDTH = 100;
     private int CARD_HEIGHT = 150;
     private static int lastClick = 7;
     private JButton[] persons = new JButton[4];
+    private JLabel[] personAbilities = new JLabel[4];
     private JButton active = new JButton();
     private JLabel deck = new JLabel();
     private JButton[] options = new JButton[2];
     private JButton[] oppPersons = new JButton[4];
+    private JLabel[] oppPersonAbilities = new JLabel[4];
     private JButton oppActive = new JButton();
     private JLabel oppDeck = new JLabel();
 
@@ -28,15 +32,18 @@ public class UserInterface extends JFrame{
     }
 
     public void update() {
+        revalidate();
         repaint();
     }
     public void update(Player p1, Player p2) {
         for (int j = 0; j < 2; j++) {
             for (int i = 0; i < persons.length; i++) {
                 String setText;
-                String abilities;
-                Person person = p1.getPerson(i);
+                String abilities = "<html>";
+                Person person;
                 if (j == 0) {
+                    person = p1.getPerson(i);
+                } else {
                     person = p2.getPerson(i);
                 }
 
@@ -46,16 +53,17 @@ public class UserInterface extends JFrame{
                 String energy = "Energy: " + person.getEnergy();
                 setText = "<html>" + name + spacing + health + "<br/>" + energy + "</html>";
     
-                abilities = "<html>";
-                for (Ability a : person.getAbilities()) {
+                abilities += "Abilities:<br/>";
+                ArrayList<Ability> abils = person.getAbilities();
+                for (Ability a : abils) {
                     abilities += a.getName();
-                    abilities += "....";
-                    abilities += "Energy Cost: " + a.getAttackCost();
-                    abilities += "  ";
+                    abilities += "..";
+                    abilities += "E:" + a.getAttackCost();
+                    abilities += " ";
                     if (a.getDamage() > 0) {
-                        abilities += "Damage: " + a.getDamage();
+                        abilities += "D:" + a.getDamage();
                     } else {
-                        abilities += "Heals: " + (a.getDamage() * -1);
+                        abilities += "H:" + (a.getDamage() * -1);
                     }
                     abilities += "<br/>";
                 }
@@ -63,20 +71,19 @@ public class UserInterface extends JFrame{
     
                 if (j == 0) {
                     persons[i].setText(setText);
-                    persons[i].setToolTipText(abilities);
+                    //personAbilities[i].setFont(new Font("Arial", Font.PLAIN, 8));
+                    personAbilities[i].setText(abilities);
                     persons[i].setIcon(new ImageIcon(person.getImage()));
                     if (i == p1.getActiveIndex()) {
                         active.setText(setText);
-                        active.setToolTipText(abilities);
                         active.setIcon(new ImageIcon(person.getImage()));
                     }
                 } else {
                     oppPersons[i].setText(setText);
-                    oppPersons[i].setToolTipText(abilities);
+                    oppPersonAbilities[i].setText(abilities);
                     oppPersons[i].setIcon(new ImageIcon(person.getImage()));
                     if (i == p2.getActiveIndex()) {
                         oppActive.setText(setText);
-                        oppActive.setToolTipText(abilities);
                         oppActive.setIcon(new ImageIcon(person.getImage()));
                     }
                 }
@@ -103,7 +110,7 @@ public class UserInterface extends JFrame{
             }
         }
 
-        repaint();
+        update();
     }
 
     public void gameScreen() {
@@ -129,30 +136,46 @@ public class UserInterface extends JFrame{
         this.add(b);
         */
 
-        oppPersons[0] = new JButton("Secondary Left");
-        oppPersons[0].setBounds(230, 10, CARD_WIDTH, CARD_HEIGHT);
-        oppPersons[0].setVisible(true);
-        add(oppPersons[0]);
+        oppPersons[2] = new JButton("Secondary Left");
+        oppPersons[2].setBounds(230, 10, CARD_WIDTH, CARD_HEIGHT);
+        oppPersons[2].setVisible(true);
+        add(oppPersons[2]);
+        oppPersonAbilities[2] = new JLabel();
+        oppPersonAbilities[2].setBounds(230 - CARD_WIDTH, 10, CARD_WIDTH, CARD_HEIGHT);
+        oppPersonAbilities[2].setVisible(true);
+        add(oppPersonAbilities[2]);
 
         oppPersons[1] = new JButton("Secondary Right");
         oppPersons[1].setBounds(450, 10, CARD_WIDTH, CARD_HEIGHT);
         oppPersons[1].setVisible(true);
         add(oppPersons[1]);
+        oppPersonAbilities[1] = new JLabel();
+        oppPersonAbilities[1].setBounds(450 - CARD_WIDTH, 10, CARD_WIDTH, CARD_HEIGHT);
+        oppPersonAbilities[1].setVisible(true);
+        add(oppPersonAbilities[1]);
 
-        oppPersons[2] = new JButton("Tertiary Right");
-        oppPersons[2].setBounds(120, 170, CARD_WIDTH, CARD_HEIGHT);
-        oppPersons[2].setVisible(true);
-        add(oppPersons[2]);
+        oppPersons[3] = new JButton("Tertiary Right");
+        oppPersons[3].setBounds(120, 170, CARD_WIDTH, CARD_HEIGHT);
+        oppPersons[3].setVisible(true);
+        add(oppPersons[3]);
+        oppPersonAbilities[3] = new JLabel();
+        oppPersonAbilities[3].setBounds(120 - CARD_WIDTH, 170, CARD_WIDTH, CARD_HEIGHT);
+        oppPersonAbilities[3].setVisible(true);
+        add(oppPersonAbilities[3]);
 
         oppActive = new JButton("Active");
         oppActive.setBounds(340, 170, CARD_WIDTH, CARD_HEIGHT);
         oppActive.setVisible(true);
         add(oppActive);
 
-        oppPersons[3] = new JButton("Tertiary Left");
-        oppPersons[3].setBounds(560, 170, CARD_WIDTH, CARD_HEIGHT);
-        oppPersons[3].setVisible(true);
-        add(oppPersons[3]);
+        oppPersons[0] = new JButton("Tertiary Left");
+        oppPersons[0].setBounds(560, 170, CARD_WIDTH, CARD_HEIGHT);
+        oppPersons[0].setVisible(true);
+        add(oppPersons[0]);
+        oppPersonAbilities[0] = new JLabel();
+        oppPersonAbilities[0].setBounds(560 - CARD_WIDTH, 170, CARD_WIDTH, CARD_HEIGHT);
+        oppPersonAbilities[0].setVisible(true);
+        add(oppPersonAbilities[0]);
 
         Icon testimg = new ImageIcon("C:\\Users\\Cyber_Hawk09\\OneDrive\\Desktop\\Earl of March\\Grade_11_AP_Comp_Sci\\Card-Game\\Capture.PNG");
         oppDeck = new JLabel(testimg);
@@ -160,28 +183,44 @@ public class UserInterface extends JFrame{
         oppDeck.setIcon(new ImageIcon("C:\\Users\\Cyber_Hawk09\\OneDrive\\Desktop\\Earl of March\\Grade_11_AP_Comp_Sci\\Card-Game\\Capture.PNG"));
         oppDeck.setVisible(true);
         add(oppDeck);
-        repaint();
+        update();
 
         //Current Player
         persons[0] = new JButton("Tertiary Left");
         persons[0].setBounds(120, 330, CARD_WIDTH, CARD_HEIGHT);
         persons[0].setVisible(true);
         add(persons[0]);
+        personAbilities[0] = new JLabel();
+        personAbilities[0].setBounds(120 - CARD_WIDTH, 330, CARD_WIDTH, CARD_HEIGHT);
+        personAbilities[0].setVisible(true);
+        add(personAbilities[0]);
 
-        persons[1] = new JButton("Tertiary Right");
-        persons[1].setBounds(560, 330, CARD_WIDTH, CARD_HEIGHT);
-        persons[1].setVisible(true);
-        add(persons[1]);
-
-        persons[2] = new JButton("Secondary Left");
-        persons[2].setBounds(230, 490, CARD_WIDTH, CARD_HEIGHT);
-        persons[2].setVisible(true);
-        add(persons[2]);
-
-        persons[3] = new JButton("Secondary Right");
-        persons[3].setBounds(450, 490, CARD_WIDTH, CARD_HEIGHT);
+        persons[3] = new JButton("Tertiary Right");
+        persons[3].setBounds(560, 330, CARD_WIDTH, CARD_HEIGHT);
         persons[3].setVisible(true);
         add(persons[3]);
+        personAbilities[3] = new JLabel();
+        personAbilities[3].setBounds(560 - CARD_WIDTH, 330, CARD_WIDTH, CARD_HEIGHT);
+        personAbilities[3].setVisible(true);
+        add(personAbilities[3]);
+
+        persons[1] = new JButton("Secondary Left");
+        persons[1].setBounds(230, 490, CARD_WIDTH, CARD_HEIGHT);
+        persons[1].setVisible(true);
+        add(persons[1]);
+        personAbilities[1] = new JLabel();
+        personAbilities[1].setBounds(230 - CARD_WIDTH, 490, CARD_WIDTH, CARD_HEIGHT);
+        personAbilities[1].setVisible(true);
+        add(personAbilities[1]);
+
+        persons[2] = new JButton("Secondary Right");
+        persons[2].setBounds(450, 490, CARD_WIDTH, CARD_HEIGHT);
+        persons[2].setVisible(true);
+        add(persons[2]);
+        personAbilities[2] = new JLabel();
+        personAbilities[2].setBounds(450 - CARD_WIDTH, 490, CARD_WIDTH, CARD_HEIGHT);
+        personAbilities[2].setVisible(true);
+        add(personAbilities[2]);
         
         active = new JButton("Active");
         active.setBounds(340, 330, CARD_WIDTH, CARD_HEIGHT);
@@ -223,13 +262,4 @@ public class UserInterface extends JFrame{
         }
         update();
     }
-    
-    public static String getInput() {
-        /* 
-        Scanner console = new Scanner(System.in);
-        System.out.println("What card would you like to add energy to?");
-        String input = console.nextLine();
-        console.close();
-        return input; */
-    } 
 }

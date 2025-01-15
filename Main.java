@@ -23,8 +23,8 @@ public class Main {
     public static void runTurn(Player p1, Player p2, UserInterface frame) {
         //Add Ability
         p1.deckDraw();
-        while (frame.getLastClick() > 5) {
-            frame.update();
+        while (frame.getLastClick() > 5 || frame.getLastClick() < 4) {
+            frame.update(p1, p2);
         }
         Ability abil = p1.getHand(frame.getLastClick() - 4);
         frame.setLastClick(7);
@@ -34,7 +34,7 @@ public class Main {
         }
         p1.addAbility(frame.getLastClick(), abil);
         frame.setLastClick(7);
-        ///p1.deckReset(abil);
+        p1.deckReset(abil);
 
         //Add Energy
         for (int i = 0; i < 4; i++) {
@@ -51,6 +51,7 @@ public class Main {
         }
         p1.setActive(frame.getLastClick());
         frame.setLastClick(7);
+        frame.update(p1, p2);
 
         //Do Attack
         ArrayList<Ability> activeAbils = p1.getActive().getAbilities();
@@ -66,58 +67,28 @@ public class Main {
         }
     }
     public static void main (String[] args) {
-        /*
-        Scanner console = new Scanner(System.in);
-        
-        Person knight = new Person( "Knight", 3, new ArrayList<Ability>(), 30);
-        String input = console.nextLine();
-        knight.addEnergy(3);
-        if (input.equals("attach strong attack")) {
-            Ability strongAttack = new Ability("Strong Attack", 5, 1);
-            knight.addAbility(strongAttack);
-        } else if (input.equals("energy")) {
-            System.out.println(knight.getEnergy());
-        }
-
-        String another = console.nextLine();
-        if (another.equals("strong attack") && knight.abilityIndex("Strong Attack") >= 0) {
-            System.out.println(knight.getAbilities().get(knight.abilityIndex("Strong Attack")).getDamage());
-        } else {
-            System.out.println("no strong attack");
-        }
-        console.close();
-        */
-        /* 
-        Person k = new Person( "Knight", 3, new ArrayList<Ability>(), 30);
-        ArrayList<Person> p = new ArrayList<Person>();
-        p.add(k);
-        p.add(k);
-        p.add(k);
-        p.add(k);
-        Ability s = new Ability("Strong Attack", 5, 1);
-        ArrayList<Ability> a = new ArrayList<Ability>();
-        a.add(s);
-        a.add(s);
-        a.add(s);
-        a.add(s);
-        a.add(s);
-        runGame(new Player(p, a), new Player(p, a));
-        */
         UserInterface frame = new UserInterface();
         frame.gameScreen();
 
         ArrayList<Ability> abils = new ArrayList<Ability>();
         Ability a = new Ability("Fireball", "test", 3, 1);
+        Ability aa = new Ability("Heal", "test", -4, 2);
         abils.add(a);
         abils.add(a);
         abils.add(a);
         abils.add(a);
         abils.add(a);
         abils.add(a);
+        ArrayList<Ability> abilsa = new ArrayList<Ability>();
+        abilsa = abils;
+        abilsa.add(a);
+        abilsa.add(a);
+        abilsa.add(a);
+        abilsa.add(a);
         Person p = new Person("p", "test", 3, abils, 3);
-        Person pa = new Person("knight", "test", 7, abils, 4);
-        Person[] persons = {pa, p, p, p};
-        Player p1 = new Player(abils, persons);
+        Person pa = new Person("knight", "test", 7, abilsa, 4);
+        Person[] persons = {p, pa, pa, p};
+        Player p1 = new Player(abilsa, persons);
         Player p2 = p1;
         frame.update(p1, p2);
 

@@ -1,4 +1,4 @@
-public class Ability extends Card{
+public class Ability extends Card implements Comparable{
     private int damage;
     private int attackCost;
     
@@ -19,5 +19,13 @@ public class Ability extends Card{
     }
     public void setAttackCost(int attackCost) {
         this.attackCost = attackCost;
+    }
+
+    public int compareTo(Ability a) {
+        if (this.getName() == a.getName()) {
+            return 0;
+        } else {
+            return this.getName().compareTo(a.getName());
+        }
     }
 }

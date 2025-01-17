@@ -21,7 +21,14 @@ public class Ability extends Card implements Comparable{
         this.attackCost = attackCost;
     }
 
-    public int compareTo(Ability a) {
+    @Override
+    public int compareTo(Object o) {
+        Ability a;
+        try {
+             a = (Ability)o;
+        } catch (Exception e) {
+            return 1;
+        }
         if (this.getName() == a.getName()) {
             return 0;
         } else {

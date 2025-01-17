@@ -72,9 +72,8 @@ public class UserInterface extends JFrame{
                 if (j == 0) {
                     persons[i].setText(setText);
                     //personAbilities[i].setFont(new Font("Arial", Font.PLAIN, 8));
-                    remove(personAbilities[i]);
                     personAbilities[i].setText(abilities);
-                    add(personAbilities[i]);
+                    personAbilities[i].setBounds(persons[i].getX() - CARD_WIDTH, persons[i].getY(), CARD_WIDTH, CARD_HEIGHT);
                     persons[i].setIcon(new ImageIcon(person.getImage()));
                     if (i == p1.getActiveIndex()) {
                         active.setText(setText);
@@ -97,6 +96,7 @@ public class UserInterface extends JFrame{
             if (opt == null) {
                 options[i].setVisible(false);
             } else {
+                options[i].setVisible(true);
                 String name = opt.getName();
                 String spacing = "<br/><br/><br/><br/><br/><br/>";
                 String energy = "Energy Cost: " + opt.getAttackCost();
@@ -179,10 +179,8 @@ public class UserInterface extends JFrame{
         oppPersonAbilities[0].setVisible(true);
         add(oppPersonAbilities[0]);
 
-        Icon testimg = new ImageIcon("C:\\Users\\Cyber_Hawk09\\OneDrive\\Desktop\\Earl of March\\Grade_11_AP_Comp_Sci\\Card-Game\\Capture.PNG");
-        oppDeck = new JLabel(testimg);
+        oppDeck = new JLabel();
         oppDeck.setBounds(10, 170, CARD_WIDTH, CARD_HEIGHT);
-        oppDeck.setIcon(new ImageIcon("C:\\Users\\Cyber_Hawk09\\OneDrive\\Desktop\\Earl of March\\Grade_11_AP_Comp_Sci\\Card-Game\\Capture.PNG"));
         oppDeck.setVisible(true);
         add(oppDeck);
         update();

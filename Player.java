@@ -47,11 +47,13 @@ public class Player {
             repetitions = 2;
         } else if (deckSize == 1) {
             repetitions = 1;
+        } else {
+            repetitions = 0;
         }
         for (int i = 0; i < repetitions; i++) {
             //double ind = random.nextDouble() * deckSize - 1;
             //int index = (int)ind;
-            int index = random.nextInt(deckSize - 1);
+            int index = deckSize > 1 ? random.nextInt(deckSize - 1) : 0;
             hand[i] = deck.get(index);
             deck.remove(index);
         }

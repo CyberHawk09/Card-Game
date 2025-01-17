@@ -39,6 +39,7 @@ public class UserInterface extends JFrame{
         for (int j = 0; j < 2; j++) {
             for (int i = 0; i < persons.length; i++) {
                 String setText;
+                //String abilities = "<html>Abilities:<br/>";
                 String abilities = "<html>";
                 Person person;
                 if (j == 0) {
@@ -53,7 +54,6 @@ public class UserInterface extends JFrame{
                 String energy = "Energy: " + person.getEnergy();
                 setText = "<html>" + name + spacing + health + "<br/>" + energy + "</html>";
     
-                abilities += "Abilities:<br/>";
                 ArrayList<Ability> abils = person.getAbilities();
                 for (Ability a : abils) {
                     abilities += a.getName();
@@ -72,7 +72,9 @@ public class UserInterface extends JFrame{
                 if (j == 0) {
                     persons[i].setText(setText);
                     //personAbilities[i].setFont(new Font("Arial", Font.PLAIN, 8));
+                    remove(personAbilities[i]);
                     personAbilities[i].setText(abilities);
+                    add(personAbilities[i]);
                     persons[i].setIcon(new ImageIcon(person.getImage()));
                     if (i == p1.getActiveIndex()) {
                         active.setText(setText);
@@ -190,7 +192,7 @@ public class UserInterface extends JFrame{
         persons[0].setBounds(120, 330, CARD_WIDTH, CARD_HEIGHT);
         persons[0].setVisible(true);
         add(persons[0]);
-        personAbilities[0] = new JLabel();
+        personAbilities[0] = new JLabel("Test");
         personAbilities[0].setBounds(120 - CARD_WIDTH, 330, CARD_WIDTH, CARD_HEIGHT);
         personAbilities[0].setVisible(true);
         add(personAbilities[0]);
@@ -199,7 +201,7 @@ public class UserInterface extends JFrame{
         persons[3].setBounds(560, 330, CARD_WIDTH, CARD_HEIGHT);
         persons[3].setVisible(true);
         add(persons[3]);
-        personAbilities[3] = new JLabel();
+        personAbilities[3] = new JLabel("Test");
         personAbilities[3].setBounds(560 - CARD_WIDTH, 330, CARD_WIDTH, CARD_HEIGHT);
         personAbilities[3].setVisible(true);
         add(personAbilities[3]);
@@ -208,7 +210,7 @@ public class UserInterface extends JFrame{
         persons[1].setBounds(230, 490, CARD_WIDTH, CARD_HEIGHT);
         persons[1].setVisible(true);
         add(persons[1]);
-        personAbilities[1] = new JLabel();
+        personAbilities[1] = new JLabel("Test");
         personAbilities[1].setBounds(230 - CARD_WIDTH, 490, CARD_WIDTH, CARD_HEIGHT);
         personAbilities[1].setVisible(true);
         add(personAbilities[1]);
@@ -217,7 +219,7 @@ public class UserInterface extends JFrame{
         persons[2].setBounds(450, 490, CARD_WIDTH, CARD_HEIGHT);
         persons[2].setVisible(true);
         add(persons[2]);
-        personAbilities[2] = new JLabel();
+        personAbilities[2] = new JLabel("Test");
         personAbilities[2].setBounds(450 - CARD_WIDTH, 490, CARD_WIDTH, CARD_HEIGHT);
         personAbilities[2].setVisible(true);
         add(personAbilities[2]);

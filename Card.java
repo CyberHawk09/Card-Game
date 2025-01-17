@@ -11,7 +11,7 @@ public class Card {
         return name;
     }
     public String getImage() {
-        return image;
+       return image;
     }
     public void setName(String name) {
         this.name = name;

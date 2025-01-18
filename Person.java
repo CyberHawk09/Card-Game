@@ -9,9 +9,9 @@ public class Person extends Card{
     public Person(String name, String image, int moveCost, ArrayList<Ability> abilities, int max) {
         super(name, image);
         this.moveCost = moveCost;
-        energy = 0;
         this.abilities = abilities;
         MAX_HEALTH = max;
+        energy = 0;
         health = MAX_HEALTH;
     }
 
@@ -85,5 +85,11 @@ public class Person extends Card{
             }
         }
         return -1;
+    }
+
+    public Person copy() {
+        Object o = getAbilities().clone();
+        ArrayList<Ability> a = (ArrayList<Ability>)o;
+        return new Person(getName(), getImage(), getMoveCost(), a, getMaxHealth());
     }
 }

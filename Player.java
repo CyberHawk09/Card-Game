@@ -79,10 +79,12 @@ public class Player {
 
     public static void doAttack(Player attacker, int attackIndex, Player defender) {
         int attackerDamage = attacker.getActive().getAbilities().get(attackIndex).getDamage();
+        int attackerCost = attacker.getActive().getAbilities().get(attackIndex).getAttackCost();
         if (attackerDamage > 0) {
             defender.getActive().subtractHealth(attackerDamage);
         } else {
             attacker.getActive().addHealth(attackerDamage * -1);
         }
+        attacker.getActive().subtractEnergy(attackerCost);
     }
 }

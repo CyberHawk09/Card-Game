@@ -179,12 +179,6 @@ public class UserInterface extends JFrame{
         oppPersonAbilities[0].setVisible(true);
         add(oppPersonAbilities[0]);
 
-        oppDeck = new JLabel();
-        oppDeck.setBounds(10, 170, CARD_WIDTH, CARD_HEIGHT);
-        oppDeck.setVisible(true);
-        add(oppDeck);
-        update();
-
         //Current Player
         persons[0] = new JButton("Tertiary Left");
         persons[0].setBounds(120, 330, CARD_WIDTH, CARD_HEIGHT);

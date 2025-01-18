@@ -4,7 +4,7 @@ public class Main {
     static final Ability heal = new Ability("Heal", "", -3, 2);
     static final Ability slash = new Ability("Slash", "", 2, 1);
     static final Ability kick = new Ability("Kick", "", 1, 1);
-    static final Ability feast = new Ability("Feast" , "", -7, 10);
+    static final Ability feast = new Ability("Feast" , "", -7, 8);
     static final Ability stab = new Ability("Stab", "", 3, 2);
     static final Ability charge = new Ability("Charge", "", 5, 6);
     static final Ability fireball = new Ability("Fireball", "", 10, 13);
@@ -79,7 +79,7 @@ public class Main {
         int highCost = 0;
         int highIndex = -1;
         for (int i = 0; i < activeAbils.size(); i++) {
-            if (activeAbils.get(i).getAttackCost() >= highCost) {
+            if (activeAbils.get(i).getAttackCost() >= highCost && activeAbils.get(i).getAttackCost() <= p1.getActive().getEnergy()) {
                 highIndex = i;
                 highCost = activeAbils.get(i).getAttackCost();
             }

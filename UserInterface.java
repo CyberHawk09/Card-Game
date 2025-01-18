@@ -1,6 +1,5 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.Font;
 import java.awt.event.*;
 import java.util.ArrayList;
 public class UserInterface extends JFrame{
@@ -9,13 +8,13 @@ public class UserInterface extends JFrame{
     private static int lastClick = 7;
     private JButton[] persons = new JButton[4];
     private JLabel[] personAbilities = new JLabel[4];
-    private JButton active = new JButton();
+    private JLabel active = new JLabel();
     private JLabel deck = new JLabel();
     private JButton[] options = new JButton[2];
     private JButton[] oppPersons = new JButton[4];
     private JLabel[] oppPersonAbilities = new JLabel[4];
     private JButton oppActive = new JButton();
-    private JLabel oppDeck = new JLabel();
+    private JLabel oppActiveAbility = new JLabel();
 
     public UserInterface() {
         setBounds(100, 50, 900, 700);
@@ -75,17 +74,26 @@ public class UserInterface extends JFrame{
                     personAbilities[i].setText(abilities);
                     personAbilities[i].setBounds(persons[i].getX() - CARD_WIDTH, persons[i].getY(), CARD_WIDTH, CARD_HEIGHT);
                     persons[i].setIcon(new ImageIcon(person.getImage()));
+                    /*
                     if (i == p1.getActiveIndex()) {
                         active.setText(setText);
                         active.setIcon(new ImageIcon(person.getImage()));
                     }
+                    */
                 } else {
-                    oppPersons[i].setText(setText);
-                    oppPersonAbilities[i].setText(abilities);
-                    oppPersons[i].setIcon(new ImageIcon(person.getImage()));
                     if (i == p2.getActiveIndex()) {
+                        oppPersons[i].setVisible(false);
+                        oppPersonAbilities[i].setVisible(false);
+                        
                         oppActive.setText(setText);
                         oppActive.setIcon(new ImageIcon(person.getImage()));
+                        oppActiveAbility.setText(abilities);
+                    } else {
+                        oppPersons[i].setText(setText);
+                        oppPersonAbilities[i].setText(abilities);
+                        oppPersons[i].setIcon(new ImageIcon(person.getImage()));
+                        oppPersons[i].setVisible(true);
+                        oppPersonAbilities[i].setVisible(true);
                     }
                 }
             }
@@ -169,6 +177,10 @@ public class UserInterface extends JFrame{
         oppActive.setBounds(340, 170, CARD_WIDTH, CARD_HEIGHT);
         oppActive.setVisible(true);
         add(oppActive);
+        oppActiveAbility = new JLabel();
+        oppActiveAbility.setBounds(340 - CARD_WIDTH, 170, CARD_WIDTH, CARD_HEIGHT);
+        oppActiveAbility.setVisible(true);
+        add(oppActiveAbility);
 
         oppPersons[0] = new JButton("Tertiary Left");
         oppPersons[0].setBounds(560, 170, CARD_WIDTH, CARD_HEIGHT);
@@ -216,7 +228,10 @@ public class UserInterface extends JFrame{
         personAbilities[2].setVisible(true);
         add(personAbilities[2]);
         
-        active = new JButton("Active");
+        active = new JLabel("Active", SwingConstants.CENTER);
+        active.setHorizontalTextPosition(SwingConstants.CENTER);
+        active.setVerticalTextPosition(SwingConstants.CENTER);
+        active.setText("Active");
         active.setBounds(340, 330, CARD_WIDTH, CARD_HEIGHT);
         active.setVisible(true);
         add(active);

@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 public class UserInterface extends JFrame{
@@ -228,15 +229,14 @@ public class UserInterface extends JFrame{
         personAbilities[2].setVisible(true);
         add(personAbilities[2]);
         
-        active = new JLabel("Active", SwingConstants.CENTER);
+        active = new JLabel("Active Slot", SwingConstants.CENTER);
         active.setHorizontalTextPosition(SwingConstants.CENTER);
         active.setVerticalTextPosition(SwingConstants.CENTER);
-        active.setText("Active");
         active.setBounds(340, 330, CARD_WIDTH, CARD_HEIGHT);
         active.setVisible(true);
         add(active);
 
-        deck = new JLabel("Deck");
+        deck = new JLabel();
         deck.setBounds(725, 330, CARD_WIDTH, CARD_HEIGHT);
         deck.setVisible(true);
         add(deck);
@@ -270,5 +270,64 @@ public class UserInterface extends JFrame{
             });
         }
         update();
+    }
+
+    public void endScreen(String winStats, String[] rankings) {
+        for (JButton b : persons) {
+            b.setVisible(false);
+        }
+        for (JLabel l : personAbilities) {
+            l.setVisible(false);
+        }
+        for (JButton b : options) {
+            b.setVisible(false);
+        }
+        for (JButton b : oppPersons) {
+            b.setVisible(false);
+        }
+        for (JLabel l : oppPersonAbilities) {
+            l.setVisible(false);
+        }
+        active.setVisible(false);
+        deck.setVisible(false);
+        oppActive.setVisible(false);
+        oppActiveAbility.setVisible(false);
+
+        String setText = "<html>";
+        if (winStats.startsWith("Player 1")) {
+            setText += "Player 1 Wins!<br/>";
+        } else {
+            setText += "Player 2 Wins!<br/>";
+        }
+        setText += "You won in " + winStats.substring(11) + " turns!<br/>";
+
+        setText += "<br/>Rankings:<br/>";
+        for (int i = 0; i < 5; i++) {
+            setText += (i + 1) + ". ";
+            try {
+                setText += rankings[i];
+            } catch (Exception e) {
+                setText += "No record";
+            }
+            setText += "<br/>";
+        }
+
+        setText += "<br/>Thank you for playing!</html>";
+
+        JLabel message = new JLabel(setText, SwingConstants.CENTER);
+        message.setBounds(0, 0, 900, 700);
+        message.setFont(new Font("Serif", Font.PLAIN, 30));
+        message.setVisible(true);
+        add(message);
+        update();
+    }
+
+    public void close() {
+        dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }
+
+    public void textError() {
+        removeAll();
+        JLabel message = new JLabel("Rankings.txt Text File is Missing!", SwingConstants.CENTER);
     }
 }

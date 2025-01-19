@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.io.*;
 
 public class Main {
     static final Ability heal = new Ability("Heal", "", -3, 2);
@@ -17,8 +18,9 @@ public class Main {
     static final Person princess = new Person("Princess", "", 0, new ArrayList<Ability>(), 12);
     //princess.addAbility(stab);
 
-    public static void runGame(Player p1, Player p2, UserInterface frame) {
+    public static String runGame(Player p1, Player p2, UserInterface frame) {
         boolean p1Turn = true;
+        int turnCount = 0;
 
         frame.gameScreen();
         while (true) {
@@ -28,6 +30,7 @@ public class Main {
                 }
                 runTurn(p1, p2, frame);
                 p1Turn = false;
+                turnCount++;
             } else {
                 if (!p2.checkSlots()) {
                     break;
@@ -35,6 +38,14 @@ public class Main {
                 runTurn(p2, p1, frame);
                 p1Turn = true;
             }
+        }
+
+        if (p1Turn) {
+            System.out.println("testinga");
+            return "Player 2 - " + turnCount;
+        } else {
+            System.out.println("testing");
+            return "Player 1 - " + turnCount;
         }
     }
 
@@ -87,6 +98,46 @@ public class Main {
         if (highIndex >= 0) {
             Player.doAttack(p1, highIndex, p2);
         }
+    }
+
+    public static void gameOver(String results, UserInterface frame) {
+        try {
+            PrintWriter pw = new PrintWriter(new FileWriter("Rankings.txt", true));
+            pw.println(results);
+            pw.close();
+        } catch (IOException e) {
+            frame.textError();
+        }
+        try {
+            String rankings = "";
+            BufferedReader br = new BufferedReader(new FileReader("Rankings.txt"));
+            String addedText = br.readLine();
+            while (addedText != null) {
+                rankings += addedText + "/";
+                addedText = br.readLine();
+            }
+            rankings = rankings.substring(0, rankings.length() - 1);
+            String[] rankingsArray = bubbleSort(rankings.split("/"));
+            frame.endScreen(results, rankingsArray);
+        } catch (IOException e) {
+            frame.textError();
+        }
+    }
+
+    public static String[] bubbleSort(String[] s) {
+        String[] arr = s;
+        System.out.println(arr.toString());
+        for (int i = arr.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                System.out.println(j);
+                    if (Integer.parseInt(arr[j].substring(11)) > Integer.parseInt(arr[j + 1].substring(11))) {
+                        String temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+            }
+        }
+        return arr;
     }
 
     public static void main(String[] args) {
@@ -149,6 +200,8 @@ public class Main {
 
         Player p1 = new Player(p1Deck, p1Persons);
         Player p2 = new Player(p2Deck, p2Persons);
-        runGame(p1, p2, frame);
+        String results = runGame(p1, p2, frame);
+        System.out.println(results.substring(0, 8));
+        gameOver(results, frame);
     }
 }

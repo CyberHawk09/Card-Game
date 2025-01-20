@@ -335,7 +335,7 @@ public class UserInterface extends JFrame{
                 "Step 4: Select your Active card. They will do the most expensive ability they can afford.<br/>" +
                 "<br/>Now pass the controls to the other player!</html>";
         JLabel walkthrough = new JLabel(walkText, SwingConstants.CENTER);
-        walkthrough.setBounds(575, 0, 300, 300);
+        walkthrough.setBounds(700, 0, 150, 400);
         walkthrough.setOpaque(true);
         walkthrough.setVisible(true);
         add(walkthrough);

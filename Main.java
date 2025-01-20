@@ -1,27 +1,22 @@
 import java.util.ArrayList;
 import java.io.*;
 
+/**
+ * The main class that handles all the information together and the game logic.
+ */
 public class Main {
-    static final Ability heal = new Ability("Heal", "", -3, 2);
-    static final Ability slash = new Ability("Slash", "", 2, 1);
-    static final Ability kick = new Ability("Kick", "", 1, 1);
-    static final Ability feast = new Ability("Feast" , "", -7, 8);
-    static final Ability stab = new Ability("Stab", "", 3, 2);
-    static final Ability charge = new Ability("Charge", "", 5, 6);
-    static final Ability fireball = new Ability("Fireball", "", 10, 13);
-    static final Person king = new Person("King", "", 0, new ArrayList<Ability>(), 8);
-    //king.addAbility(feast);
-    static final Person queen = new Person("Queen", "", 0, new ArrayList<Ability>(), 10);
-    //queen.addAbility(charge);
-    static final Person knight = new Person("Knight", "", 0, new ArrayList<Ability>(), 15);
-    //knight.addAbility(stab);
-    static final Person princess = new Person("Princess", "", 0, new ArrayList<Ability>(), 12);
-    //princess.addAbility(stab);
-
+    /**
+     * Starts a game with the two specified players and the specified UserInterface.
+     * @param p1 the first Player to make a move
+     * @param p2 the second Player to make a move
+     * @param frame the UserInterface to handle display and user input
+     * @return a String representing which Player won and in how many turns
+     */
     public static String runGame(Player p1, Player p2, UserInterface frame) {
         boolean p1Turn = true;
-        int turnCount = 0;
+        int turnCount = 0; //Counts turns as 1 turn = 1 Player1 move + 1 Player2 move
 
+        //Start Game
         frame.gameScreen();
         while (true) {
             if (p1Turn) {
@@ -40,15 +35,20 @@ public class Main {
             }
         }
 
+        //Return String with data on winner and turns it took to win
         if (p1Turn) {
-            System.out.println("testinga");
             return "Player 2 - " + turnCount;
         } else {
-            System.out.println("testing");
             return "Player 1 - " + turnCount;
         }
     }
 
+    /**
+     * Runs a turn with the specified Players and UserInterface.
+     * @param p1 the current Player
+     * @param p2 the opposing Player
+     * @param frame the UserInterface to handle display and user input
+     */
     public static void runTurn(Player p1, Player p2, UserInterface frame) {
         //Add Ability
         p1.deckDraw();
@@ -100,7 +100,13 @@ public class Main {
         }
     }
 
+    /**
+     * Records the results of the last game permanently. Reads all the records and calls on the specified UserInterface's endScreen() method with the last results and all past records.
+     * @param results the results of the last game
+     * @param frame the UserInterface to handle display and user input
+     */
     public static void gameOver(String results, UserInterface frame) {
+        //Add latest results to Rankings.txt
         try {
             PrintWriter pw = new PrintWriter(new FileWriter("Rankings.txt", true));
             pw.println(results);
@@ -108,6 +114,7 @@ public class Main {
         } catch (IOException e) {
             frame.textError();
         }
+        //Display game over screen and sort all results in order (least -> greatest)
         try {
             String rankings = "";
             BufferedReader br = new BufferedReader(new FileReader("Rankings.txt"));
@@ -117,61 +124,115 @@ public class Main {
                 addedText = br.readLine();
             }
             rankings = rankings.substring(0, rankings.length() - 1);
-            String[] rankingsArray = bubbleSort(rankings.split("/"));
+            String[] rankingsArray = quickSort(rankings.split("/"));
             frame.endScreen(results, rankingsArray);
         } catch (IOException e) {
             frame.textError();
         }
     }
 
-    public static String[] bubbleSort(String[] s) {
+    /**
+     * Sorts all records from least amount of turns to most.
+     * @param s an array of records to be sorted
+     * @return a sorted array of all the records.
+     */
+    public static String[] quickSort(String[] s) {
+        //Create separate array
         String[] arr = s;
-        System.out.println(arr.toString());
-        for (int i = arr.length - 1; i > 0; i--) {
-            for (int j = 0; j < i; j++) {
-                System.out.println(j);
-                    if (Integer.parseInt(arr[j].substring(11)) > Integer.parseInt(arr[j + 1].substring(11))) {
-                        String temp = arr[j];
-                        arr[j] = arr[j + 1];
-                        arr[j + 1] = temp;
-                    }
+
+        //Find k-value (midpoint)
+        int k = Integer.parseInt(arr[0].substring(11));
+
+        //Count how many elements are less than, more than, or equal to k-value
+        int less = 0;
+        int more = 0;
+        int equals = 0;
+        for (int i = 0; i < arr.length; i++) {
+            Integer.parseInt(arr[i].substring(11));
+            if (Integer.parseInt(arr[i].substring(11)) < k) {
+                less++;
+            } else if (Integer.parseInt(arr[i].substring(11)) > k) {
+                more++;
             }
         }
+        equals = arr.length - (less + more);
+        //Base Case: return array if there is only one type of element left
+        if (less < 1 && more < 1) {
+            return arr;
+        }
+
+        //Copy values into separate arrays depending on if they are less than, more than, or equal to k-value
+        String[] lessArr = new String[less];
+        String[] moreArr = new String[more];
+        String[] equalsArr = new String[equals];
+
+        int lessIndex = 0;
+        int moreIndex = 0;
+        int equalsIndex = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (Integer.parseInt(arr[i].substring(11)) < k) {
+                lessArr[lessIndex] = arr[i];
+                lessIndex++;
+            } else if (Integer.parseInt(arr[i].substring(11)) > k) {
+                moreArr[moreIndex] = arr[i];
+                moreIndex++;
+            } else {
+                equalsArr[equalsIndex] = arr[i];
+                equalsIndex++;
+            }
+        }
+
+        //Recursive call to sort each sub-array if they have any elements
+        if (less > 0) {
+            lessArr = quickSort(lessArr);
+        }
+        if (more > 0) {
+            moreArr = quickSort(moreArr);
+        }
+        equalsArr = quickSort(equalsArr);
+
+        //Combine all 3 arrays into a single sorted array
+        for (int i = 0; i < arr.length; i++) {
+            if (i < less) {
+                arr[i] = lessArr[i];
+            } else if (i - less < equals) {
+                arr[i] = equalsArr[i - less];
+            } else {
+                arr[i] = moreArr[i - less - equals];
+            }
+        }
+
+        //Return
         return arr;
     }
 
+    /**
+     * The method that is run by Java, where all the other game logic methods are called.
+     * @param args N/A
+     */
     public static void main(String[] args) {
+        //Create a new JFrame/UserInterface
         UserInterface frame = new UserInterface();
 
-        /*
-        ArrayList<Ability> abils = new ArrayList<Ability>();
-        Ability a = new Ability("Fireball", "test", 3, 1);
-        Ability aa = new Ability("Heal", "test", -4, 2);
-        abils.add(a);
-        abils.add(aa);
-        abils.add(aa);
-        abils.add(a);
-        ArrayList<Ability> abilsa = new ArrayList<Ability>();
-        abilsa.add(a);
-        abilsa.add(aa);
-        abilsa.add(aa);
-        abilsa.add(aa);
-        ArrayList<Ability> abilsb = new ArrayList<Ability>();
-        abilsb.add(a);
-        abilsb.add(aa);
-        Person p = new Person("p", "test", 3, abilsb, 3);
-        Person pa = new Person("knight", "test", 7, abilsa, 5);
-        Person[] persons = {new Person("0", "", 3, new ArrayList<Ability>(), 30), new Person("1", "", 3, new ArrayList<Ability>(), 25), pa, p};
-        Player p1 = new Player(abils, persons);
-        Player p2 = p1;
-        //frame.update(p1, p2);
-         u/
-         */
+        //Instantiate Ability presets
+        Ability heal = new Ability("Heal", "", -3, 2);
+        Ability slash = new Ability("Slash", "", 2, 1);
+        Ability kick = new Ability("Kick", "", 1, 1);
+        Ability feast = new Ability("Feast" , "", -7, 8);
+        Ability stab = new Ability("Stab", "", 3, 2);
+        Ability charge = new Ability("Charge", "", 5, 6);
+        Ability fireball = new Ability("Fireball", "", 9, 11);
+        //Instantiate Person presets
+        Person king = new Person("King", "", new ArrayList<Ability>(), 8);
+        Person queen = new Person("Queen", "", new ArrayList<Ability>(), 10);
+        Person knight = new Person("Knight", "", new ArrayList<Ability>(), 15);
+        Person princess = new Person("Princess", "", new ArrayList<Ability>(), 12);
         king.addAbility(feast);
         queen.addAbility(charge);
         knight.addAbility(stab);
         princess.addAbility(stab);
 
+        //Instantiate decks
         ArrayList<Ability> p1Deck = new ArrayList<Ability>();
         p1Deck.add(kick);
         p1Deck.add(kick);
@@ -192,16 +253,19 @@ public class Main {
         Object p2DeckObj = p1Deck.clone();
         ArrayList<Ability> p2Deck = (ArrayList<Ability>)p2DeckObj;
 
+        //Instantiate Persons
         Person[] p1Persons = {king, knight, princess, queen};
         Person[] p2Persons = new Person[4];
         for (int i = 0; i < p1Persons.length; i++) {
             p2Persons[i] = p1Persons[i].copy();
         }
-
         Player p1 = new Player(p1Deck, p1Persons);
         Player p2 = new Player(p2Deck, p2Persons);
+
+        //Game Logic!
+        //Run Game
         String results = runGame(p1, p2, frame);
-        System.out.println(results.substring(0, 8));
+        //Display Game Over Screen and Save Results
         gameOver(results, frame);
     }
 }

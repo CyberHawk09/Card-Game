@@ -3,20 +3,63 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+
+/**
+ * An object that contains and handles all information regarding the Graphical User Interface of the Card-Game project.
+ */
 public class UserInterface extends JFrame{
-    private int CARD_WIDTH = 100;
-    private int CARD_HEIGHT = 150;
+    /**
+     * A constant representing the width (in pixels) of each Card on the screen.
+     */
+    final private int CARD_WIDTH = 100;
+    /**
+     * A constant representing the height (in pixels) of each Card on the screen.
+     */
+    final private int CARD_HEIGHT = 150;
+    /**
+     * An integer whose value is dictated by the last button click on the screen.
+     */
     private static int lastClick = 7;
+    /**
+     * An array of JButtons representing each Person of the current Player.
+     */
     private JButton[] persons = new JButton[4];
+    /**
+     * An array of JLabels representing the abilities of each Person of the current Player.
+     */
     private JLabel[] personAbilities = new JLabel[4];
+    /**
+     * A JLabel representing the active slot of the current Player.
+     */
     private JLabel active = new JLabel();
+    /**
+     * A JLabel representing the deck of the current Player.
+     */
     private JLabel deck = new JLabel();
+    /**
+     * An array of JButtons representing each Ability in the hand of the current Player.
+     */
     private JButton[] options = new JButton[2];
+    /**
+     * An array of JButtons representing the persons of the opposing Player.
+     */
     private JButton[] oppPersons = new JButton[4];
+    /**
+     * An array of JLabels representing the abilities of each Person of the opposing Player.
+     */
     private JLabel[] oppPersonAbilities = new JLabel[4];
+    /**
+     * A JButton representing the active Person of the opposing Player.
+     */
     private JButton oppActive = new JButton();
+    /**
+     * A JLabel representing the abilities of the active Person of the opposing Player.
+     */
     private JLabel oppActiveAbility = new JLabel();
 
+    /**
+     * Constructs a JFrame with dimensions 900x700px starting 100 pixels from the left and 50 pixels from the top of the screen.
+     */
     public UserInterface() {
         setBounds(100, 50, 900, 700);
         setVisible(true);
@@ -24,23 +67,43 @@ public class UserInterface extends JFrame{
         setLayout(null);
     }
 
+    /**
+     * Returns the value of the lastClick variable.
+     * @return the value of the lastClick variable
+     */
     public int getLastClick() {
         return lastClick;
     }
+
+    /**
+     * Sets the value of the lastClick variable to the specified amount.
+     * @param num the amount to set the lastClick variable to
+     */
     public void setLastClick(int num) {
         lastClick = num;
     }
 
+    /**
+     * Updates this UserInterface.
+     */
     public void update() {
         revalidate();
         repaint();
     }
+
+    /**
+     * Re-evaluates the values of each JButton and JLabel on this UserInterface.
+     * @param p1 the current player
+     * @param p2 the opposing player
+     */
     public void update(Player p1, Player p2) {
+        //Iterate between p1 and p2
         for (int j = 0; j < 2; j++) {
+            //Iterate between each persons array
             for (int i = 0; i < persons.length; i++) {
+                //Define some variables
                 String setText;
-                //String abilities = "<html>Abilities:<br/>";
-                String abilities = "<html>";
+                String abilities = "<html>Abilities:<br/>";
                 Person person;
                 if (j == 0) {
                     person = p1.getPerson(i);
@@ -48,6 +111,7 @@ public class UserInterface extends JFrame{
                     person = p2.getPerson(i);
                 }
 
+                //Set text
                 String name = person.getName();
                 String spacing = "<br/><br/><br/><br/><br/><br/>";
                 String health = "Health: " + person.getHealth() + "/" + person.getMaxHealth();
@@ -68,7 +132,8 @@ public class UserInterface extends JFrame{
                     abilities += "<br/>";
                 }
                 abilities += "</html>";
-    
+
+                //Set text depending on if Player 1 or Player 2 and if the card is set as active
                 if (j == 0) {
                     persons[i].setText(setText);
                     //personAbilities[i].setFont(new Font("Arial", Font.PLAIN, 8));
@@ -101,7 +166,9 @@ public class UserInterface extends JFrame{
         }
 
         for (int i = 0; i < options.length; i++) {
+            //Do the same as above but for the 2 Ability objects in the hand
             Ability opt = p1.getHand(i);
+            //If there is no card, do not display it
             if (opt == null) {
                 options[i].setVisible(false);
             } else {
@@ -120,10 +187,13 @@ public class UserInterface extends JFrame{
                 options[i].setIcon(new ImageIcon(opt.getImage()));
             }
         }
-
+        //Update the screen with all the changes
         update();
     }
 
+    /**
+     * Defines all the values, actionListeners (JButtons only), and positions of the JButtons and JLabels on this UserInterface. Prepares all of them for a round of the game.
+     */
     public void gameScreen() {
         /*
         JButton button = new JButton("Woohoo!!");
@@ -253,26 +323,28 @@ public class UserInterface extends JFrame{
 
         for (int i = 0; i < persons.length; i++) {
             final int j = i;
-            persons[i].addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    setLastClick(j);
-                    update();
-                }
-            });
+            persons[i].addActionListener((e) -> {
+                setLastClick(j);
+                update();
+                });
         }
         for (int i = 0; i < options.length; i++) {
             final int j = i + 4;
-            options[i].addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    setLastClick(j);
-                    update();
-                }
+            options[i].addActionListener((e) -> {
+                setLastClick(j);
+                update();
             });
         }
         update();
     }
 
+    /**
+     * Displays the game over message and the current rankings.
+     * @param winStats the winning player and how many turns it took to win
+     * @param rankings the full rankings
+     */
     public void endScreen(String winStats, String[] rankings) {
+        //Set all gameScreen elements as invisible
         for (JButton b : persons) {
             b.setVisible(false);
         }
@@ -293,6 +365,7 @@ public class UserInterface extends JFrame{
         oppActive.setVisible(false);
         oppActiveAbility.setVisible(false);
 
+        //Create Game Over text
         String setText = "<html>";
         if (winStats.startsWith("Player 1")) {
             setText += "Player 1 Wins!<br/>";
@@ -301,6 +374,7 @@ public class UserInterface extends JFrame{
         }
         setText += "You won in " + winStats.substring(11) + " turns!<br/>";
 
+        //Grab the top 5 best records
         setText += "<br/>Rankings:<br/>";
         for (int i = 0; i < 5; i++) {
             setText += (i + 1) + ". ";
@@ -314,6 +388,7 @@ public class UserInterface extends JFrame{
 
         setText += "<br/>Thank you for playing!</html>";
 
+        //Create JLabel to display message
         JLabel message = new JLabel(setText, SwingConstants.CENTER);
         message.setBounds(0, 0, 900, 700);
         message.setFont(new Font("Serif", Font.PLAIN, 30));
@@ -322,12 +397,32 @@ public class UserInterface extends JFrame{
         update();
     }
 
-    public void close() {
-        dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-    }
-
+    /**
+     * Alternative to gameScreen() method if Rankings.txt could not be found.
+     */
     public void textError() {
-        removeAll();
+        //Set all gameScreen elements as invisible
+        for (JButton b : persons) {
+            b.setVisible(false);
+        }
+        for (JLabel l : personAbilities) {
+            l.setVisible(false);
+        }
+        for (JButton b : options) {
+            b.setVisible(false);
+        }
+        for (JButton b : oppPersons) {
+            b.setVisible(false);
+        }
+        for (JLabel l : oppPersonAbilities) {
+            l.setVisible(false);
+        }
+        active.setVisible(false);
+        deck.setVisible(false);
+        oppActive.setVisible(false);
+        oppActiveAbility.setVisible(false);
+
+        //Display Error Text
         JLabel message = new JLabel("Rankings.txt Text File is Missing!", SwingConstants.CENTER);
     }
 }

@@ -1,7 +1,5 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.ArrayList;
 
 /**
@@ -136,30 +134,20 @@ public class UserInterface extends JFrame{
                 //Set text depending on if Player 1 or Player 2 and if the card is set as active
                 if (j == 0) {
                     persons[i].setText(setText);
-                    //personAbilities[i].setFont(new Font("Arial", Font.PLAIN, 8));
                     personAbilities[i].setText(abilities);
-                    personAbilities[i].setBounds(persons[i].getX() - CARD_WIDTH, persons[i].getY(), CARD_WIDTH, CARD_HEIGHT);
-                    persons[i].setIcon(new ImageIcon(person.getImage()));
-                    /*
-                    if (i == p1.getActiveIndex()) {
-                        active.setText(setText);
-                        active.setIcon(new ImageIcon(person.getImage()));
-                    }
-                    */
                 } else {
                     if (i == p2.getActiveIndex()) {
                         oppPersons[i].setVisible(false);
                         oppPersonAbilities[i].setVisible(false);
-                        
                         oppActive.setText(setText);
-                        oppActive.setIcon(new ImageIcon(person.getImage()));
                         oppActiveAbility.setText(abilities);
+                        oppActive.setBackground(Color.LIGHT_GRAY);
                     } else {
                         oppPersons[i].setText(setText);
                         oppPersonAbilities[i].setText(abilities);
-                        oppPersons[i].setIcon(new ImageIcon(person.getImage()));
                         oppPersons[i].setVisible(true);
                         oppPersonAbilities[i].setVisible(true);
+                        oppPersons[i].setBackground(Color.GRAY);
                     }
                 }
             }
@@ -184,7 +172,11 @@ public class UserInterface extends JFrame{
                 }
                 String setText = "<html>" + name + spacing + energy + "<br/>" + damage + "</html>";
                 options[i].setText(setText);
-                options[i].setIcon(new ImageIcon(opt.getImage()));
+                if (opt.getDamage() > 0) {
+                    options[i].setBackground(Color.ORANGE);
+                } else {
+                    options[i].setBackground(Color.YELLOW);
+                }
             }
         }
         //Update the screen with all the changes
@@ -336,6 +328,17 @@ public class UserInterface extends JFrame{
             });
         }
         update();
+
+        String walkText = "<html>WALKTHROUGH<br/><br/>Step 1: Select an orange or yellow ability in the bottom right.<br/>" +
+                "Step 2: Select a blue person card to attach the ability to (King, Queen, Knight, Princess).<br/>" +
+                "Step 3: Distribute your four energy across the person cards (1 click = 1 energy).<br/>" +
+                "Step 4: Select your Active card. They will do the most expensive ability they can afford.<br/>" +
+                "<br/>Now pass the controls to the other player!</html>";
+        JLabel walkthrough = new JLabel(walkText, SwingConstants.CENTER);
+        walkthrough.setBounds(575, 0, 300, 300);
+        walkthrough.setOpaque(true);
+        walkthrough.setVisible(true);
+        add(walkthrough);
     }
 
     /**

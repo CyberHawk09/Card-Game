@@ -14,12 +14,11 @@ public class Ability extends Card implements Comparable{
     /**
      * Constructs an Ability with the specified name, image directory, damage, and attack cost.
      * @param name the name of this Ability
-     * @param image the directory of the image to be used for this Ability
      * @param damage the damage value of this Ability
      * @param attackCost the attackCost value of this Ability
      */
-    public Ability(String name, String image, int damage, int attackCost) {
-        super(name, image);
+    public Ability(String name, int damage, int attackCost) {
+        super(name);
         this.damage = damage;
         this.attackCost = attackCost;
     }

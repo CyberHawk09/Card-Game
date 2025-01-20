@@ -22,14 +22,13 @@ public class Person extends Card implements Copyable{
     final private int MAX_HEALTH;
 
     /**
-     * Constructs a Person object with the specified name, image directory, abilities, and maximum health.
+     * Constructs a Person object with the specified name, abilities, and maximum health.
      * @param name the name of this Person
-     * @param image the directory of the image to be used for this Person
      * @param abilities the ArrayList of type Ability to be used as the abilities for this Person
      * @param max the maximum amount of health this Person can have
      */
-    public Person(String name, String image, ArrayList<Ability> abilities, int max) {
-        super(name, image);
+    public Person(String name, ArrayList<Ability> abilities, int max) {
+        super(name);
         this.abilities = abilities;
         MAX_HEALTH = max;
         energy = 0;
@@ -142,6 +141,6 @@ public class Person extends Card implements Copyable{
     public Person copy() {
         Object o = getAbilities().clone();
         ArrayList<Ability> a = (ArrayList<Ability>)o;
-        return new Person(getName(), getImage(), a, getMaxHealth());
+        return new Person(getName(), a, getMaxHealth());
     }
 }

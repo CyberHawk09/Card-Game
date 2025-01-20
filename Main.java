@@ -215,18 +215,18 @@ public class Main {
         UserInterface frame = new UserInterface();
 
         //Instantiate Ability presets
-        Ability heal = new Ability("Heal", "", -3, 2);
-        Ability slash = new Ability("Slash", "", 2, 1);
-        Ability kick = new Ability("Kick", "", 1, 1);
-        Ability feast = new Ability("Feast" , "", -7, 8);
-        Ability stab = new Ability("Stab", "", 3, 2);
-        Ability charge = new Ability("Charge", "", 5, 6);
-        Ability fireball = new Ability("Fireball", "", 9, 11);
+        Ability heal = new Ability("Heal", -3, 2);
+        Ability slash = new Ability("Slash", 2, 1);
+        Ability kick = new Ability("Kick", 1, 1);
+        Ability feast = new Ability("Feast" , -7, 8);
+        Ability stab = new Ability("Stab", 3, 2);
+        Ability charge = new Ability("Charge", 5, 6);
+        Ability fireball = new Ability("Fireball", 9, 11);
         //Instantiate Person presets
-        Person king = new Person("King", "", new ArrayList<Ability>(), 8);
-        Person queen = new Person("Queen", "", new ArrayList<Ability>(), 10);
-        Person knight = new Person("Knight", "", new ArrayList<Ability>(), 15);
-        Person princess = new Person("Princess", "", new ArrayList<Ability>(), 12);
+        Person king = new Person("King", new ArrayList<Ability>(), 8);
+        Person queen = new Person("Queen", new ArrayList<Ability>(), 10);
+        Person knight = new Person("Knight", new ArrayList<Ability>(), 15);
+        Person princess = new Person("Princess", new ArrayList<Ability>(), 12);
         king.addAbility(feast);
         queen.addAbility(charge);
         knight.addAbility(stab);
